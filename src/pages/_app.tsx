@@ -2,7 +2,7 @@ import type { AppProps } from "next/app";
 import { ThemeProvider, DefaultTheme } from "styled-components";
 import GlobalStyle from "../styles/globalstyles";
 import Navbar from "../components/organism/Navbar";
-
+import styled from "styled-components";
 const theme: DefaultTheme = {
   colors: {
     primary: "#111",
@@ -16,8 +16,14 @@ export default function App({ Component, pageProps }: AppProps) {
       <ThemeProvider theme={theme}>
         <Navbar></Navbar>
         <GlobalStyle />
-        <Component {...pageProps} />
+        <Container>
+          <Component {...pageProps} />
+        </Container>
       </ThemeProvider>
     </>
   );
 }
+
+export const Container = styled.div`
+  padding-top: 70px;
+`;
