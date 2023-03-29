@@ -2,6 +2,8 @@ import styled from "styled-components";
 import Link from "next/link";
 export const Nav = styled.nav`
   height: 70px;
+  width: 100%;
+  position: fixed;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -11,7 +13,6 @@ export const Nav = styled.nav`
   border-width: 0 0 1px 0;
   border-bottom-color: #eaeaea;
   flex-wrap: wrap;
-  position: relative;
 `;
 
 export const LogoContainer = styled(Link)`
@@ -31,13 +32,10 @@ export const NavLinkContainer = styled.div`
     align-items: left;
     background-color: #fff;
     margin: 0;
+    transition: all 0.5s ease-out;
+    max-height: 75vh;
     &.close {
-      position: absolute;
-      /* background-color: black; */
-      transition: all 0.5s ease-out;
-      /* top: -100%; */
-      transform: translateY(-100%);
-      z-index: -999;
+      max-height: 0px;
     }
   }
 `;
