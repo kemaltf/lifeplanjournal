@@ -1,77 +1,100 @@
-import React from "react";
-import styled from "styled-components";
+import React, { useState } from "react";
+import styled, { CSSProperties } from "styled-components";
 
-type Props = {};
+interface Props {
+  sliderIndex: number;
+}
 
 const index = (props: Props) => {
+  const [sliderIndex, setSliderIndex] = useState(0);
+  const handleLeftArrowClick = () => {
+    setSliderIndex((sliderIndex - 1 + 4) % 4);
+  };
+  const handleRightArrowClick = () => {
+    setSliderIndex((sliderIndex + 1) % 4);
+  };
+  console.log(sliderIndex);
   return (
     <SlideContainer>
-      <SlideContent>
-        <CardWrapper>
-          <Card>
-            <ImageContent>
-              <ImageTitle>
-                <h3>Lorem ipsum dolor.</h3>
-                <h1>Lorem ipsum dolor sit amet.</h1>
-                <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quae ipsa distinctio aliquam.</p>
-                <Button>view more</Button>
-              </ImageTitle>
-            </ImageContent>
-          </Card>
-        </CardWrapper>
+      <ArrowButtonLeft onClick={handleLeftArrowClick}>
+        <span>&#8249;</span>
+      </ArrowButtonLeft>
+      <SlideContent style={{ "--slider-index": sliderIndex } as CSSProperties}>
+        <img src="https://via.placeholder.com/210/00FF00?text=1" alt="" />
+        <img src="https://via.placeholder.com/220/00FF00?text=2" alt="" />
+        <img src="https://via.placeholder.com/230/00FF00?text=3" alt="" />
+        <img src="https://via.placeholder.com/240/00FF00?text=4" alt="" />
+        <img src="https://via.placeholder.com/250/00FF00?text=5" alt="" />
+        <img src="https://via.placeholder.com/260/00FF00?text=6" alt="" />
+        <img src="https://via.placeholder.com/270/00FF00?text=7" alt="" />
+        <img src="https://via.placeholder.com/280/00FF00?text=8" alt="" />
+        <img src="https://via.placeholder.com/290/00FF00?text=9" alt="" />
       </SlideContent>
+      <ArrowButtonRight onClick={handleRightArrowClick}>
+        <span>&#8250;</span>
+      </ArrowButtonRight>
     </SlideContainer>
   );
 };
 
 export default index;
 export const SlideContainer = styled.div`
-  background-color: red;
-  height: 80vh;
-  width: 100%;
+  display: flex;
+  justify-content: center;
+  overflow: hidden;
 `;
 
 export const SlideContent = styled.div`
-  width: 100%;
-  height: 100%;
-`;
-export const CardWrapper = styled.div`
-  width: 100%;
-  height: 100%;
-`;
-export const Card = styled.div`
-  width: 100%;
-  height: 100%;
-  position: relative;
-`;
-export const ImageContent = styled.div`
-  height: 100%;
-  width: 100%;
-  background-image: url("https://images.unsplash.com/photo-1531988042231-d39a9cc12a9a?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80");
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-`;
-export const ImageTitle = styled.div`
+  --slider-index: 0;
+  flex-grow: 1;
   display: flex;
-  flex-direction: column;
-  width: 50%;
-  height: 100%;
-  padding: 50px;
-  justify-content: center;
-  align-items: left;
-`;
-export const Button = styled.button`
-  border: none;
-  font-size: 16px;
-  color: #fff;
-  padding: 8px 16px;
-  background-color: blueviolet;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-
-  &:hover {
-    background-color: #c097e5;
+  width: calc(100% - 2 * var(--slider-padding));
+  transform: translateX(calc(var(--slider-index) * -100%));
+  transition: transform 250ms ease-in-out;
+  margin: 0 0.25rem;
+  & > img {
+    padding: 0.25rem;
+    aspect-ratio: 16/9;
+    max-width: 25%;
+    flex: 0 0 25%;
+    overflow: hidden;
   }
+`;
+// mixins
+const ArrowButton = styled.button`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-grow: 0;
+  width: var(--slider-padding);
+  background-color: rgba(0, 0, 0, 0.25);
+  z-index: 10;
+  margin: 0.25rem 0;
+  /* width: 5rem; */
+  cursor: pointer;
+  border: none;
+  font-size: 5rem;
+  color: white;
+  transition: transform 150ms ease-in-out;
+  transition: background-color 150ms ease-in-out;
+
+  &:hover,
+  &:focus {
+    background-color: rgba(0, 0, 0, 0.5);
+    font-size: 6rem;
+  }
+
+  &:hover span,
+  &:focus span {
+    transform: scale(1.1);
+    outline: none;
+  }
+`;
+
+export const ArrowButtonLeft = styled(ArrowButton)`
+  border-radius: 0 1rem 1rem 0;
+`;
+
+export const ArrowButtonRight = styled(ArrowButton)`
+  border-radius: 1rem 0 0 1rem;
 `;
