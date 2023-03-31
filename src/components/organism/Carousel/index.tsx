@@ -46,6 +46,7 @@ export const SlideContainer = styled.div`
 
 export const SlideContent = styled.div`
   --slider-index: 0;
+  --items-per-screen: 4;
   flex-grow: 1;
   display: flex;
   width: calc(100% - 2 * var(--slider-padding));
@@ -55,9 +56,17 @@ export const SlideContent = styled.div`
   & > img {
     padding: 0.25rem;
     aspect-ratio: 16/9;
-    max-width: 25%;
-    flex: 0 0 25%;
+    max-width: calc(100% / var(--items-per-screen));
+    flex: 0 0 calc(100% / var(--items-per-screen));
     overflow: hidden;
+  }
+
+  @media (min-width: 768px) and (max-width: 1023px) {
+    --items-per-screen: 3;
+  }
+
+  @media (max-width: 767px) {
+    --items-per-screen: 1;
   }
 `;
 // mixins
@@ -66,6 +75,7 @@ const ArrowButton = styled.button`
   align-items: center;
   justify-content: center;
   flex-grow: 0;
+  flex-shrink: 0;
   width: var(--slider-padding);
   background-color: rgba(0, 0, 0, 0.25);
   z-index: 10;
