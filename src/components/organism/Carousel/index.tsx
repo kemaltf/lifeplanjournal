@@ -1,110 +1,65 @@
+import { Container } from "@/styles/SharedStyles";
 import React, { useState } from "react";
-import styled, { CSSProperties } from "styled-components";
+import { CSSProperties } from "styled-components";
+import { ArrowButtonLeft, ArrowButtonRight, ImageCarousel, SlideContent } from "./CarouselStyled";
 
 interface Props {
-  sliderIndex: number;
+  SliderIndex: number;
 }
-
-const index = (props: Props) => {
+// definisikan variabel untuk jumlah
+// gambar yang ditampilkan dalam 1 slide
+const itemsPerSlide = 1;
+// Ceritanya gambarnya dari API, setelah API jadi kita replace
+const images: string[] = [
+  "https://via.placeholder.com/210/00FF00?text=1",
+  "https://via.placeholder.com/220/00FF00?text=2",
+  "https://via.placeholder.com/230/00FF00?text=3",
+  "https://via.placeholder.com/240/00FF00?text=4",
+  "https://via.placeholder.com/250/00FF00?text=5",
+  "https://via.placeholder.com/260/00FF00?text=6",
+  "https://via.placeholder.com/270/00FF00?text=7",
+  "https://via.placeholder.com/280/00FF00?text=8",
+  "https://via.placeholder.com/290/00FF00?text=9",
+];
+// Ini merupakan jumlah slide
+const slideTotal = Math.ceil(images.length / itemsPerSlide);
+const Index = (props: Props) => {
   const [sliderIndex, setSliderIndex] = useState(0);
+  const [startX, setStartX] = useState(0);
+  const [endX, setEndX] = useState(0);
   const handleLeftArrowClick = () => {
-    setSliderIndex((sliderIndex - 1 + 4) % 4);
+    setSliderIndex((sliderIndex - 1 + slideTotal) % slideTotal);
   };
   const handleRightArrowClick = () => {
-    setSliderIndex((sliderIndex + 1) % 4);
+    setSliderIndex((sliderIndex + 1) % slideTotal);
   };
-  console.log(sliderIndex);
+  const handleTouchStart = (e: React.TouchEvent<HTMLDivElement>) => {
+    setStartX(e.touches[0].clientX);
+  };
+
+  const handleTouchEnd = (e: React.TouchEvent<HTMLDivElement>) => {
+    setEndX(e.changedTouches[0].clientX);
+    if (startX - endX > 50) {
+      setSliderIndex((sliderIndex + 1) % slideTotal);
+    } else if (endX - startX > 50) {
+      setSliderIndex((sliderIndex - 1 + slideTotal) % slideTotal);
+    }
+  };
   return (
-    <SlideContainer>
+    <Container>
       <ArrowButtonLeft onClick={handleLeftArrowClick}>
         <span>&#8249;</span>
       </ArrowButtonLeft>
-      <SlideContent style={{ "--slider-index": sliderIndex } as CSSProperties}>
-        <img src="https://via.placeholder.com/210/00FF00?text=1" alt="" />
-        <img src="https://via.placeholder.com/220/00FF00?text=2" alt="" />
-        <img src="https://via.placeholder.com/230/00FF00?text=3" alt="" />
-        <img src="https://via.placeholder.com/240/00FF00?text=4" alt="" />
-        <img src="https://via.placeholder.com/250/00FF00?text=5" alt="" />
-        <img src="https://via.placeholder.com/260/00FF00?text=6" alt="" />
-        <img src="https://via.placeholder.com/270/00FF00?text=7" alt="" />
-        <img src="https://via.placeholder.com/280/00FF00?text=8" alt="" />
-        <img src="https://via.placeholder.com/290/00FF00?text=9" alt="" />
+      <SlideContent style={{ "--slider-index": sliderIndex } as CSSProperties} itemsPerSlide={itemsPerSlide} onTouchStart={handleTouchStart} onTouchEnd={handleTouchEnd}>
+        {images.map((image: string, index) => (
+          <ImageCarousel image={image} key={index}></ImageCarousel>
+          // <img key={index} src={image} alt="" />
+        ))}
       </SlideContent>
       <ArrowButtonRight onClick={handleRightArrowClick}>
         <span>&#8250;</span>
       </ArrowButtonRight>
-    </SlideContainer>
+    </Container>
   );
 };
-
-export default index;
-export const SlideContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  overflow: hidden;
-`;
-
-export const SlideContent = styled.div`
-  --slider-index: 0;
-  --items-per-screen: 4;
-  flex-grow: 1;
-  display: flex;
-  width: calc(100% - 2 * var(--slider-padding));
-  transform: translateX(calc(var(--slider-index) * -100%));
-  transition: transform 250ms ease-in-out;
-  margin: 0 0.25rem;
-  & > img {
-    padding: 0.25rem;
-    aspect-ratio: 16/9;
-    max-width: calc(100% / var(--items-per-screen));
-    flex: 0 0 calc(100% / var(--items-per-screen));
-    overflow: hidden;
-  }
-
-  @media (min-width: 768px) and (max-width: 1023px) {
-    --items-per-screen: 3;
-  }
-
-  @media (max-width: 767px) {
-    --items-per-screen: 1;
-  }
-`;
-// mixins
-const ArrowButton = styled.button`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-grow: 0;
-  flex-shrink: 0;
-  width: var(--slider-padding);
-  background-color: rgba(0, 0, 0, 0.25);
-  z-index: 10;
-  margin: 0.25rem 0;
-  /* width: 5rem; */
-  cursor: pointer;
-  border: none;
-  font-size: 5rem;
-  color: white;
-  transition: transform 150ms ease-in-out;
-  transition: background-color 150ms ease-in-out;
-
-  &:hover,
-  &:focus {
-    background-color: rgba(0, 0, 0, 0.5);
-    font-size: 6rem;
-  }
-
-  &:hover span,
-  &:focus span {
-    transform: scale(1.1);
-    outline: none;
-  }
-`;
-
-export const ArrowButtonLeft = styled(ArrowButton)`
-  border-radius: 0 1rem 1rem 0;
-`;
-
-export const ArrowButtonRight = styled(ArrowButton)`
-  border-radius: 1rem 0 0 1rem;
-`;
+export default Index;
