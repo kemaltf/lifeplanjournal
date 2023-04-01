@@ -3,9 +3,6 @@ import React, { useState } from "react";
 import { CSSProperties } from "styled-components";
 import { ArrowButtonLeft, ArrowButtonRight, ImageCarousel, SlideContent } from "./CarouselStyled";
 
-interface Props {
-  SliderIndex: number;
-}
 // definisikan variabel untuk jumlah
 // gambar yang ditampilkan dalam 1 slide
 const itemsPerSlide = 1;
@@ -23,7 +20,7 @@ const images: string[] = [
 ];
 // Ini merupakan jumlah slide
 const slideTotal = Math.ceil(images.length / itemsPerSlide);
-const Index = (props: Props) => {
+const Index = () => {
   const [sliderIndex, setSliderIndex] = useState(0);
   const [startX, setStartX] = useState(0);
   const [endX, setEndX] = useState(0);
