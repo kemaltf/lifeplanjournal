@@ -27,13 +27,6 @@ export const SlideContent = styled.div<HeroProps>`
   transform: translateX(calc(var(--slider-index) * -100%));
   transition: transform 250ms ease-in-out;
   padding: 0 0.25rem;
-  /* & > img {
-    padding: 0.25rem;
-    aspect-ratio: 16/9;
-    max-width: calc(100% / var(--items-per-screen));
-    flex: 0 0 calc(100% / var(--items-per-screen));
-    overflow: hidden;
-  } */
 
   @media (min-width: 768px) and (max-width: 1023px) {
     --items-per-screen: 3;
@@ -63,14 +56,12 @@ const ArrowButton = styled.button`
   transition: transform 150ms ease-in-out;
   transition: background-color 150ms ease-in-out;
 
-  &:hover,
-  &:focus {
+  &:hover {
     background-color: rgba(0, 0, 0, 0.5);
     font-size: 6rem;
   }
 
-  &:hover span,
-  &:focus span {
+  &:hover span {
     transform: scale(1.1);
     outline: none;
   }
