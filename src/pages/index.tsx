@@ -1,3 +1,4 @@
+import CollectionCard from "../components/organism/CollectionCard";
 import Head from "next/head";
 import Carousel from "../components/organism/Carousel";
 export default function Home() {
@@ -10,6 +11,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Carousel></Carousel>
+      <CollectionCard></CollectionCard>
     </>
   );
 }
