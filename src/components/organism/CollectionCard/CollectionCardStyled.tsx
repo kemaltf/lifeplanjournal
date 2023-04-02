@@ -11,12 +11,10 @@ export const ContainerColumn = styled(Container)`
   flex-direction: column;
   align-items: center;
   text-align: center;
-  /* background-color: red; */
 `;
 export const ContainerCard = styled(Container)`
   justify-content: space-between;
   padding: 5px 2vh;
-  /* background-color: blue; */
   max-width: 90%;
   width: 100%;
   align-items: center;
