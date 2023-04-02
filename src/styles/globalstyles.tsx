@@ -9,6 +9,7 @@ const GlobalStyle = createGlobalStyle`\
     --gog-royal-blue: #00269A;
     --gog-sky-blue: #6BAAE5;
     --gog-pastel-teal: #A5E6DA;
+    --gog-pastel-teal-darker: #6dc3c2;
     --gog-bright-red: #FF5B5A;
     --gog-coral-pink: #FD8C83;
     --gog-crayola-yellow: #F9E08E;
