@@ -1,10 +1,16 @@
 import styled from "styled-components";
+import { Container } from "@/styles/SharedStyles";
+
 interface HeroProps {
   itemsPerSlide: number;
 }
 interface ImageCarouselProps {
   image: string;
 }
+
+export const ContainerStyled = styled(Container)`
+  overflow: hidden;
+`;
 
 export const ImageCarousel = styled.div<ImageCarouselProps>`
   background-image: url(${(props) => props.image});

@@ -1,7 +1,6 @@
-import { Container } from "@/styles/SharedStyles";
 import React, { useState } from "react";
 import { CSSProperties } from "styled-components";
-import { ArrowButtonLeft, ArrowButtonRight, ImageCarousel, SlideContent } from "./CarouselStyled";
+import { ArrowButtonLeft, ArrowButtonRight, ContainerStyled, ImageCarousel, SlideContent } from "./CarouselStyled";
 
 // definisikan variabel untuk jumlah
 // gambar yang ditampilkan dalam 1 slide
@@ -43,7 +42,7 @@ const Index = () => {
     }
   };
   return (
-    <Container>
+    <ContainerStyled>
       <ArrowButtonLeft onClick={handleLeftArrowClick}>
         <span>&#8249;</span>
       </ArrowButtonLeft>
@@ -56,7 +55,7 @@ const Index = () => {
       <ArrowButtonRight onClick={handleRightArrowClick}>
         <span>&#8250;</span>
       </ArrowButtonRight>
-    </Container>
+    </ContainerStyled>
   );
 };
 export default Index;

@@ -7,7 +7,7 @@ interface CollectionCardProps {
   itemsNumber: number;
 }
 export const ContainerColumn = styled(Container)`
-  padding: 20px 0 0 0;
+  padding: 20px 0 20px 0;
   flex-direction: column;
   align-items: center;
   text-align: center;
@@ -21,7 +21,7 @@ export const ContainerCard = styled(Container)`
   width: 100%;
   align-items: center;
   text-align: center;
-
+  overflow: hidden;
   @media (min-width: 768px) and (max-width: 1023px) {
     max-width: 100%;
   }
