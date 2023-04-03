@@ -37,10 +37,12 @@ const index = ({
   handleCardHover,
   handleCardLeave,
 }: Props) => {
-  console.log(hoveredCard);
-  console.log("ini", product.id);
   const isHovered = hoveredCard === product.id;
-  console.log(isHovered);
+  console.log(isHovered); // catatan
+  console.log(product.id); // jadi si product.id ini akan di render ulang,
+  //nah pas dirender ulang kan si hoveredcardnya dalam state yang baru,
+  //kemudian membandingkan lah sihovered cardnya. dan akan mendapatkan nilai isHovered
+  // kesetiap komponen
   return (
     <ProductCard>
       <ImageProductContainer
