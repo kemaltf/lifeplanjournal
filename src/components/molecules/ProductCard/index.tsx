@@ -38,28 +38,37 @@ const index = ({
   handleCardLeave,
 }: Props) => {
   const isHovered = hoveredCard === product.id;
-  console.log(isHovered); // catatan
-  console.log(product.id); // jadi si product.id ini akan di render ulang,
-  //nah pas dirender ulang kan si hoveredcardnya dalam state yang baru,
-  //kemudian membandingkan lah sihovered cardnya. dan akan mendapatkan nilai isHovered
-  // kesetiap komponen
   return (
     <ProductCard>
       <ImageProductContainer
         onMouseEnter={() => handleCardHover(product.id)}
         onMouseLeave={handleCardLeave}
       >
-        <ImageSize className={isHovered ? "hidden" : ""}>
-          <Image
-            src={product.imageSrc}
-            alt={product.imageAlt}
-            fill
-            style={{
-              objectFit: "cover",
-            }}
-          ></Image>
-          <StatusLabel>{product.status}</StatusLabel>
-        </ImageSize>
+        {isHovered ? (
+          <ImageSize>
+            <Image
+              src={product.imageTwo}
+              alt={product.imageAlt}
+              fill
+              style={{
+                objectFit: "cover",
+              }}
+            ></Image>
+            <StatusLabel>{product.status}</StatusLabel>
+          </ImageSize>
+        ) : (
+          <ImageSize>
+            <Image
+              src={product.imageSrc}
+              alt={product.imageAlt}
+              fill
+              style={{
+                objectFit: "cover",
+              }}
+            ></Image>
+            <StatusLabel>{product.status}</StatusLabel>
+          </ImageSize>
+        )}
       </ImageProductContainer>
       <NameProductContainer>
         <CollaborationName>{product.artist}</CollaborationName>
