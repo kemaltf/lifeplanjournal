@@ -1,6 +1,6 @@
 import { createGlobalStyle } from "styled-components";
 
-const GlobalStyle = createGlobalStyle`\
+const GlobalStyle = createGlobalStyle`
   :root {
     --gog-primary: #003f59;
     --gog-primary-dark-1: #001b26;
@@ -39,6 +39,9 @@ const GlobalStyle = createGlobalStyle`\
     padding: 0;
   }
 
+  .hidden{
+    visibility: hidden;
+  }
 `;
 
 export default GlobalStyle;
