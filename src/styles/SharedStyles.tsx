@@ -16,6 +16,7 @@ export const ContainerPad = styled(Container)`
 export const ContainerCol = styled(Container)<ContainerColProps>`
   flex-direction: column;
   gap: ${(props) => (props.gap ? props.gap : 0)};
+  width: 100%;
 `;
 export const ContainerBg = styled(Container)<ContainerBgProps>`
   background-image: url(${(props) => props.image});
