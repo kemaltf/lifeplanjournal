@@ -19,7 +19,7 @@ const Index = () => {
   return (
     <Nav>
       <LogoContainer href="/">
-        <Image src={LogoImage} alt="logo" width={30}></Image>
+        <Image src={LogoImage} alt="logo" width={27}></Image>
         <SiteTitle>
           <h1>Life Plan Journal</h1>
         </SiteTitle>

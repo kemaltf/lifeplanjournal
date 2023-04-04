@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import Link from "next/link";
 export const Nav = styled.nav`
-  height: 70px;
+  height: 50px;
   width: 100%;
   position: fixed;
   display: flex;
@@ -14,6 +14,15 @@ export const Nav = styled.nav`
   border-width: 0 0 1px 0;
   border-bottom-color: #eaeaea;
   flex-wrap: wrap;
+  padding: 0 40px;
+
+  @media (min-width: 768px) and (max-width: 1023px) {
+    padding: 0 20px;
+  }
+
+  @media (max-width: 767px) {
+    padding: 0;
+  }
 `;
 
 export const LogoContainer = styled(Link)`
@@ -42,8 +51,9 @@ export const NavLinkContainer = styled.div`
 `;
 
 export const NavLinkStyled = styled(Link)`
-  padding: 1rem;
+  padding: 0.9rem;
   color: #003f59;
+  font-size: 0.9rem;
   &:hover {
     color: #000608;
   }
@@ -56,6 +66,7 @@ export const NavLinkStyled = styled(Link)`
 export const SiteTitle = styled.div`
   margin-left: 0.8rem;
   h1 {
+    font-size: 1.3rem;
     font-weight: 500;
   }
 `;
