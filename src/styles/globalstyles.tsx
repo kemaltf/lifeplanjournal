@@ -19,7 +19,6 @@ const GlobalStyle = createGlobalStyle`
     color: ${({ theme }) => theme.colors.primary};
     padding: 0;
     margin: 0;
-    font-family: 'Poppins', sans-serif;
    }
 
   html,
@@ -37,6 +36,8 @@ const GlobalStyle = createGlobalStyle`
     box-sizing: border-box;
     margin: 0;
     padding: 0;
+    font-family: 'Poppins', sans-serif;
+    scroll-behavior: smooth;
   }
 
   .hidden{
