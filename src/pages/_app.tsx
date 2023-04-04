@@ -28,5 +28,5 @@ export default function App({ Component, pageProps }: AppProps) {
 }
 
 export const Container = styled.div`
-  padding-top: 70px;
+  padding-top: 50px;
 `;
