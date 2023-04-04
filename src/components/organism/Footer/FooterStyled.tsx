@@ -3,13 +3,16 @@ import { ContainerPad, Container, ContainerCol } from "@/styles/SharedStyles";
 import Image from "next/image";
 
 export const FooterContainer = styled(ContainerPad)`
-  padding: 40px 80px;
+  padding: 80px 80px 40px 80px;
   background-color: var(--gog-forth-color);
   border-style: solid;
   border-width: 1px 0px 0px 0px;
   border-color: #efeef4;
   font-size: 0.9rem;
   @media (min-width: 768px) and (max-width: 1023px) {
+    padding: 40px 20px;
+  }
+  @media (max-width: 767px) {
     padding: 40px 20px;
   }
   a {
@@ -30,6 +33,9 @@ export const FooterInnerContainer = styled(Container)`
     flex-direction: column;
     align-items: start;
     gap: 20px;
+    div {
+      justify-content: start;
+    }
   }
   ul {
     text-decoration: none;
@@ -53,7 +59,9 @@ export const FooterInnerContainer = styled(Container)`
   }
 `;
 
-export const FooterContent = styled(Container)``;
+export const FooterContent = styled(Container)`
+  width: 100%;
+`;
 
 export const SocialMediaIcon = styled.ul`
   display: flex;
@@ -118,4 +126,12 @@ export const ContainerColStyled = styled(ContainerCol)`
 `;
 export const Icon = styled(Image)`
   margin: 10px 0 0 0;
+`;
+export const FooterMark = styled(Container)`
+  border-top: 1px solid var(--gog-primary);
+  display: block;
+  margin: 40px 0 0 0;
+  padding: 20px 0 0 0;
+  font-size: 0.7rem;
+  text-align: center;
 `;
