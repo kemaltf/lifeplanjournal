@@ -58,19 +58,17 @@ const index = () => {
   };
 
   return (
-    <>
-      <ProductCardsContainer>
-        {products.map((product, index) => (
-          <ProductCard
-            product={product}
-            hoveredCard={hoveredCard}
-            handleCardHover={handleCardHover}
-            handleCardLeave={handleCardLeave}
-            key={product.id}
-          ></ProductCard>
-        ))}
-      </ProductCardsContainer>
-    </>
+    <ProductCardsContainer>
+      {products.map((product, index) => (
+        <ProductCard
+          product={product}
+          hoveredCard={hoveredCard}
+          handleCardHover={handleCardHover}
+          handleCardLeave={handleCardLeave}
+          key={product.id}
+        ></ProductCard>
+      ))}
+    </ProductCardsContainer>
   );
 };
 
