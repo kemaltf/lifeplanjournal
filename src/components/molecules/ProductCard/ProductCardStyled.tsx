@@ -5,10 +5,16 @@ import styled from "styled-components";
 export const ProductCard = styled(ContainerPad)`
   width: calc(100% / 3);
   padding: 10px 10px;
-  /* height: 400px; */
-  /* background-color: blue; */
-  align-text: center;
   flex-direction: column;
+  @media (min-width: 768px) and (max-width: 1023px) {
+    max-width: 100%;
+  }
+
+  @media (max-width: 767px) {
+    width: calc(100% / 2);
+    gap: 10px;
+    flex-direction: column;
+  }
 `;
 
 export const ImageProductContainer = styled(Container)``;
