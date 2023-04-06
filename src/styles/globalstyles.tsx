@@ -1,6 +1,15 @@
 import { createGlobalStyle } from "styled-components";
 
 const GlobalStyle = createGlobalStyle`
+  ::-webkit-scrollbar {
+    -webkit-appearance: none;
+    width: 7px;
+  }
+  ::-webkit-scrollbar-thumb {
+    border-radius: 4px;
+    background-color: rgba(0, 0, 0, .5);
+    box-shadow: 0 0 1px rgba(255, 255, 255, .5);
+}
   :root {
     --gog-primary: #003f59;
     --gog-primary-dark-1: #001b26;
@@ -19,6 +28,7 @@ const GlobalStyle = createGlobalStyle`
     color: ${({ theme }) => theme.colors.primary};
     padding: 0;
     margin: 0;
+    scrollbar-width: thin;
    }
 
   html,

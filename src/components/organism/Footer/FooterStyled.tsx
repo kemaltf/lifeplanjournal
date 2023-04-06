@@ -43,6 +43,7 @@ export const FooterInnerContainer = styled(Container)`
   }
   & > div:nth-child(1) {
     flex-basis: 20%;
+    justify-content: start;
     /* background-color: red; */
   }
   & > div:nth-child(2) {

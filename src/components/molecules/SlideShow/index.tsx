@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { CSSProperties } from "styled-components";
-import { ArrowButtonLeft, ArrowButtonRight, ContainerStyled, ImageCarousel, SlideContent } from "./CarouselStyled";
+import { PaddingDiv, ArrowButtonLeft, ArrowButtonRight, ContainerStyled, ImageCarousel, SlideContent } from "./SlideshowStyled";
 
 // definisikan variabel untuk jumlah
 // gambar yang ditampilkan dalam 1 slide
@@ -48,11 +48,13 @@ const Index = () => {
       </ArrowButtonLeft>
       <SlideContent style={{ "--slider-index": sliderIndex } as CSSProperties} itemsPerSlide={itemsPerSlide} onTouchStart={handleTouchStart} onTouchEnd={handleTouchEnd}>
         {images.map((image: string, index) => (
-          <ImageCarousel image={image} key={index}></ImageCarousel>
+          <PaddingDiv>
+            <ImageCarousel image={image} key={index}></ImageCarousel>
+          </PaddingDiv>
         ))}
       </SlideContent>
       <ArrowButtonRight onClick={handleRightArrowClick}>
-        <span>&#8250;</span>
+        <p>&#8250;</p>
       </ArrowButtonRight>
     </ContainerStyled>
   );

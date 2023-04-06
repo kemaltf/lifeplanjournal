@@ -1,6 +1,6 @@
 import CollectionCard from "../components/organism/CollectionCard";
 import Head from "next/head";
-import Carousel from "../components/organism/Carousel";
+import SlideShow from "../components/molecules/SlideShow";
 export default function Home() {
   return (
     <>
@@ -10,7 +10,7 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Carousel></Carousel>
+      <SlideShow></SlideShow>
       <CollectionCard></CollectionCard>
     </>
   );

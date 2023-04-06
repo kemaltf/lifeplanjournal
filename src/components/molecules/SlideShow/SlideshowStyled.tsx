@@ -10,17 +10,17 @@ interface ImageCarouselProps {
 
 export const ContainerStyled = styled(Container)`
   overflow: hidden;
+  position: relative;
 `;
+
 export const SlideContent = styled.div<HeroProps>`
   --slider-index: 0;
   --items-per-screen: ${(props) => props.itemsPerSlide};
-  flex-grow: 1;
   display: flex;
-  width: calc(100% - 2 * var(--slider-padding));
+  flex-grow: 1;
+  /* width: 100%; */
   transform: translateX(calc(var(--slider-index) * -100%));
   transition: transform 250ms ease-in-out;
-  padding: 0 0.25rem;
-
   @media (min-width: 768px) and (max-width: 1023px) {
     --items-per-screen: 3;
   }
@@ -31,39 +31,37 @@ export const SlideContent = styled.div<HeroProps>`
 `;
 export const ImageCarousel = styled.div<ImageCarouselProps>`
   background-image: url(${(props) => props.image});
-  margin: 0 0.25rem;
   aspect-ratio: 16/9;
-  max-width: calc(100% / var(--items-per-screen));
   flex: 0 0 calc(100% / var(--items-per-screen));
   overflow: hidden;
   background-size: cover;
   background-position: center;
   touch-action: pan-x;
+  width: 100%;
+  height: auto;
 `;
 
 // mixins
-const ArrowButton = styled.button`
+const ArrowButton = styled.a`
+  position: absolute;
+  top: 0;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-grow: 0;
   flex-shrink: 0;
-  /* width: var(--slider-padding); */
-  background-color: rgba(0, 0, 0, 0.25);
   z-index: 10;
-  /* margin: 0.25rem 0; */
-  /* width: 5rem; */
   cursor: pointer;
-  border: none;
   font-size: 5rem;
-  color: white;
+  color: black;
   transition: transform 150ms ease-in-out;
   transition: background-color 150ms ease-in-out;
-
-  &:hover {
-    background-color: rgba(0, 0, 0, 0.5);
-  }
-
+  overflow: hidden;
+  border: none;
+  outline: none;
+  padding: 0;
+  margin: 0;
+  height: fit-content;
   &:hover span {
     transform: scale(1.1);
     outline: none;
@@ -71,9 +69,23 @@ const ArrowButton = styled.button`
 `;
 
 export const ArrowButtonLeft = styled(ArrowButton)`
-  border-radius: 0 1rem 1rem 0;
+  left: 0;
 `;
 
 export const ArrowButtonRight = styled(ArrowButton)`
-  border-radius: 1rem 0 0 1rem;
+  right: 0;
+`;
+export const PaddingDiv = styled.div`
+  aspect-ratio: 16/9;
+  max-width: calc(100% / var(--items-per-screen));
+  flex: 0 0 calc(100% / var(--items-per-screen));
+  overflow: hidden;
+  background-size: cover;
+  background-position: center;
+  touch-action: pan-x;
+  width: 100%;
+  height: auto;
+  @media (min-width: 768px) and (max-width: 1023px) {
+    padding: 0 5px;
+  }
 `;
