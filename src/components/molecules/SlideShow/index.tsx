@@ -1,6 +1,16 @@
+import Image from "next/image";
 import React, { useState } from "react";
 import { CSSProperties } from "styled-components";
-import { PaddingDiv, ArrowButtonLeft, ArrowButtonRight, ContainerStyled, ImageCarousel, SlideContent } from "./SlideshowStyled";
+import {
+  PaddingDiv,
+  ArrowButtonLeft,
+  ArrowButtonRight,
+  ContainerStyled,
+  ImageCarousel,
+  SlideContent,
+  ArrowImageRight,
+} from "./SlideshowStyled";
+// baca lebar windows
 
 // definisikan variabel untuk jumlah
 // gambar yang ditampilkan dalam 1 slide
@@ -19,16 +29,21 @@ const images: string[] = [
 ];
 // Ini merupakan jumlah slide
 const slideTotal = Math.ceil(images.length / itemsPerSlide);
+console.log("ini slide total", slideTotal);
+
 const Index = () => {
   const [sliderIndex, setSliderIndex] = useState(0);
+  console.log(sliderIndex);
   const [startX, setStartX] = useState(0);
   const [endX, setEndX] = useState(0);
+
   const handleLeftArrowClick = () => {
     setSliderIndex((sliderIndex - 1 + slideTotal) % slideTotal);
   };
   const handleRightArrowClick = () => {
     setSliderIndex((sliderIndex + 1) % slideTotal);
   };
+
   const handleTouchStart = (e: React.TouchEvent<HTMLDivElement>) => {
     setStartX(e.touches[0].clientX);
   };
@@ -43,18 +58,35 @@ const Index = () => {
   };
   return (
     <ContainerStyled>
-      <ArrowButtonLeft onClick={handleLeftArrowClick}>
-        <span>&#8249;</span>
+      <ArrowButtonLeft>
+        <Image
+          src="/icons/arrow.svg"
+          width={40}
+          height={40}
+          alt=""
+          onClick={handleLeftArrowClick}
+        />
       </ArrowButtonLeft>
-      <SlideContent style={{ "--slider-index": sliderIndex } as CSSProperties} itemsPerSlide={itemsPerSlide} onTouchStart={handleTouchStart} onTouchEnd={handleTouchEnd}>
+      <SlideContent
+        style={{ "--slider-index": sliderIndex } as CSSProperties}
+        itemsPerSlide={itemsPerSlide}
+        onTouchStart={handleTouchStart}
+        onTouchEnd={handleTouchEnd}
+      >
         {images.map((image: string, index) => (
           <PaddingDiv>
             <ImageCarousel image={image} key={index}></ImageCarousel>
           </PaddingDiv>
         ))}
       </SlideContent>
-      <ArrowButtonRight onClick={handleRightArrowClick}>
-        <p>&#8250;</p>
+      <ArrowButtonRight>
+        <ArrowImageRight
+          src="/icons/arrow.svg"
+          width={40}
+          height={40}
+          alt=""
+          onClick={handleRightArrowClick}
+        />
       </ArrowButtonRight>
     </ContainerStyled>
   );
