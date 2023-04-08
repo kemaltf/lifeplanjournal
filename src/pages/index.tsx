@@ -1,6 +1,6 @@
 import CollectionCard from "../components/organism/CollectionCard";
 import Head from "next/head";
-import SlideShow from "../components/molecules/SlideShow";
+import BannerHomePage from "../components/molecules/BannerHomePage";
 export default function Home() {
   return (
     <>
@@ -10,7 +10,7 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <SlideShow></SlideShow>
+      <BannerHomePage></BannerHomePage>
       <CollectionCard></CollectionCard>
     </>
   );
