@@ -8,38 +8,41 @@ interface HeroProps {
 interface ImageCarouselProps {
   image: string;
 }
-
+// wrapper
 export const ContainerStyled = styled(Container)`
-  overflow: hidden;
   position: relative;
+  max-width: 100%; // artinya dimanapun bakal memenuhi widthnya
+  overflow: hidden;
 `;
-
-export const SlideContent = styled.div<HeroProps>`
-  --slider-index: 0;
-  --items-per-screen: ${(props) => props.itemsPerSlide};
-
+// carousel
+export const SlideContent = styled.div`
   display: flex;
   flex-grow: 1;
-
-  transform: translateX(calc(var(--slider-index) * -100%));
+  cursor: pointer;
+  white-space: nowrap;
   transition: transform 250ms ease-in-out;
+  /* overflow: scroll; */
+  width: 6096px;
 `;
-export const PaddingDiv = styled.div`
-  flex: 0 0 calc(100% / var(--items-per-screen));
 
-  @media (min-width: 768px) and (max-width: 1023px) {
-    padding: 0 5px;
-  }
-`;
 export const ImageCarousel = styled.div<ImageCarouselProps>`
+  display: flex;
+  flex: 0 0 calc(100% / 3); //satu layar ada 3 nanti ubah angka 3 nya ya
+
   background-image: url(${(props) => props.image});
-  /* aspect-ratio: 8/5; */
-  overflow: hidden;
   background-size: cover;
   background-position: center;
-  touch-action: pan-x;
   width: 100%;
-  height: 80vh;
+  height: 75vh;
+  @media (min-width: 768px) and (max-width: 1023px) {
+    height: 60vh;
+    flex: 0 0 calc(100% / 2); //satu layar ada 2 nanti ubah angka 3 nya ya
+    margin-right: 5px;
+  }
+  @media (max-width: 767px) {
+    flex: 0 0 calc(100% / 1); //satu layar ada 3 nanti ubah angka 3 nya ya
+    height: 50vh;
+  }
 `;
 
 // mixins
@@ -49,7 +52,6 @@ const ArrowButton = styled.div`
   justify-content: center;
   flex-grow: 0;
   flex-shrink: 0;
-
   position: absolute;
   top: 50%;
   z-index: 10;
