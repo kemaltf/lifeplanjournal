@@ -52,8 +52,6 @@ const Index = () => {
       setItemsPerSlide(1);
     }
   };
-  // Mengambil data real time jika terdapat perubahan media
-  //Panggil function getFirstImageWidth setelah gambar-gambar telah dimuat menggunakan useEffect:
   useEffect((): any => {
     // panggil saat pertama kali
     getFirstImageWidth();
@@ -84,15 +82,13 @@ const Index = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [translateX, setTranslateX] = useState(0);
   const handleLeftArrowClick = () => {
-    const maxSlide = Math.ceil(images.length / itemsPerSlide) - 1; // perbaiki maxSlidenya
+    const maxSlide = Math.ceil(images.length / itemsPerSlide) - 1;
     setCurrentSlide(currentSlide === 0 ? maxSlide : currentSlide - 1);
-    console.log("dipanggil", currentSlide);
   };
 
   const handleRightArrowClick = () => {
-    const maxSlide = Math.ceil(images.length / itemsPerSlide) - 1; // perbaiki maxSlidenya
+    const maxSlide = Math.ceil(images.length / itemsPerSlide) - 1;
     setCurrentSlide(currentSlide === maxSlide ? 0 : currentSlide + 1);
-    console.log("dipanggil", currentSlide);
   };
 
   useEffect(() => {
@@ -108,45 +104,38 @@ const Index = () => {
   const [isDragging, setIsDragging] = useState(false);
 
   // tangkap posisi awalnya menggunakan useRef
-
-  const prevClientX = useRef(0); //. prevClientX adalah ref yang digunakan untuk menyimpan posisi X kursor mouse pada saat mousedown, sehingga saat mouse di drag, kita bisa menghitung jarak antara posisi mouse sekarang dengan posisi awal pada saat mousedown.
-  const slideContentRef = useRef<HTMLDivElement>(null); // slideContentRef adalah ref yang digunakan untuk mengakses elemen HTML div yang memuat seluruh slide gambar.
+  const prevClientX = useRef(0);
+  const slideContentRef = useRef<HTMLDivElement>(null);
 
   // Ketika mouse mengklik pertama kali
   const dragStart = (e: any) => {
     // tangkap posisi awal
-    prevClientX.current = e.clientX; //current merupakan properti dari objek yang dikembalikan oleh useRef.  properti current akan merujuk pada elemen DOM yang terkait dengan referensi tersebut setelah komponen berakhir. Dengan demikian, kita bisa menggunakan properti current untuk mengakses elemen DOM. Kita tidak perlu lagi menggunakan querySelector untuk mencari elemen DOM yang sesuai. Oh iya alasan kenapa kita menggunakan prevClientX karena kalo kita simpan ke dalam variable biasa maka akan hilang setelah diperbarui.
-    setIsDragging(true); // isi e itu adalah hasil dari eventnya entah itu onclick atau apa.
+    prevClientX.current = e.clientX;
+    setIsDragging(true);
   };
   let diff;
   // ketika mouse mendrag
   const dragging = (e: any) => {
-    if (!isDragging) return; // jika kondisi klik sudah false (artinya sudah ngga ngeklik lagi) maka dragging berhenti.
-    const slideContent = slideContentRef.current!; //! tanda seru memastikan typescript bahwa kita memiliki slideContent
-    //hitung diffnya, cara meghitung diff adalah prevClientX(ketika pas mouse klik pertama kali)dikurangi e.clientX sekarang.
+    if (!isDragging) return;
     diff = e.clientX - prevClientX.current;
-    console.log("diff", diff); //benar
-    //Tambahkan nilai diff ke translateXValue
     let translateXOnDrag = translateX;
-    console.log("ini adalah nilai translate X", translateX);
-    translateXOnDrag += diff;
-    console.log("translateX + diff", translateXOnDrag);
+    translateXOnDrag -= diff;
 
-    // Bagian ini memberikan efek seperti di drag:
-    e.preventDefault(); //BIAR gambar ga ke drag
-    slideContent.style.transform = `translate3d(${translateXOnDrag}px,0,0)`; //gunakan nilai translateXValue
+    slideContentRef.current.style.transform = `translate3d(-${translateXOnDrag}px,0,0)`;
+    e.preventDefault();
   };
 
   // Ketika mouse selesai mengklik
-  const dragStop = () => {
+  const dragStop = (e: any) => {
     setIsDragging(false);
-    console.log("dilepas!");
     if (diff < -100) {
-      console.log("geser ke kanan");
       handleRightArrowClick();
     } else if (diff > 100) {
-      console.log("geser ke kiri");
       handleLeftArrowClick();
+    } else {
+      let translateXOnDrag = translateX;
+      slideContentRef.current.style.transform = `translate3d(-${translateXOnDrag}px,0,0)`;
+      e.preventDefault();
     }
   };
   return (
@@ -157,7 +146,7 @@ const Index = () => {
         <Image src="/icons/arrow.svg" width={40} height={40} alt="" onClick={handleLeftArrowClick} />
       </ArrowButtonLeft>
       {/* carousel nya */}
-      <SlideContent ref={slideContentRef} onMouseDown={dragStart} onMouseMove={dragging} onMouseUp={dragStop}>
+      <SlideContent className={isDragging ? "dragging" : ""} ref={slideContentRef} onMouseDown={dragStart} onMouseMove={dragging} onMouseUp={dragStop}>
         {/* imagenya */}
         {images.map((image: string, index) => (
           <ImageCarousel image={image} key={index}></ImageCarousel>

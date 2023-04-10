@@ -20,9 +20,14 @@ export const SlideContent = styled.div`
   flex-grow: 1;
   cursor: pointer;
   white-space: nowrap;
-  /* transition: all 250ms ease-in-out; */
+  transition: all 250ms ease-in-out;
   /* overflow: scroll; */
   width: 6096px;
+  &.dragging {
+    cursor: grab;
+    scroll-behavior: auto;
+    transition: none;
+  }
 `;
 
 export const ImageCarousel = styled.div<ImageCarouselProps>`
