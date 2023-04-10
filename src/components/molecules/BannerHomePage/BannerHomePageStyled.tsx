@@ -20,14 +20,14 @@ export const SlideContent = styled.div`
   flex-grow: 1;
   cursor: pointer;
   white-space: nowrap;
-  transition: transform 250ms ease-in-out;
+  /* transition: all 250ms ease-in-out; */
   /* overflow: scroll; */
   width: 6096px;
 `;
 
 export const ImageCarousel = styled.div<ImageCarouselProps>`
   display: flex;
-  flex: 0 0 calc(100% / 3); //satu layar ada 3 nanti ubah angka 3 nya ya
+  flex: 0 0 calc(100% / 1); //satu layar ada 3 nanti ubah angka 3 nya ya
 
   background-image: url(${(props) => props.image});
   background-size: cover;
@@ -36,7 +36,7 @@ export const ImageCarousel = styled.div<ImageCarouselProps>`
   height: 75vh;
   @media (min-width: 768px) and (max-width: 1023px) {
     height: 60vh;
-    flex: 0 0 calc(100% / 2); //satu layar ada 2 nanti ubah angka 3 nya ya
+    flex: 0 0 calc(100% / 1); //satu layar ada 2 nanti ubah angka 3 nya ya
     margin-right: 5px;
   }
   @media (max-width: 767px) {

@@ -43,10 +43,10 @@ const Index = () => {
   };
   const getItemsPerSlide = (screenWidth: number) => {
     if (screenWidth > 1023) {
-      setItemsPerSlide(3);
+      setItemsPerSlide(1);
     }
     if (screenWidth >= 768 && screenWidth <= 1023) {
-      setItemsPerSlide(2);
+      setItemsPerSlide(1);
     }
     if (screenWidth < 768) {
       setItemsPerSlide(1);
@@ -78,33 +78,28 @@ const Index = () => {
       window.removeEventListener("resize", handleResize);
     };
   }, [screenWidth]);
-  // Data slide
-  // useEffect(() => {
-  //   const slideContent = slideContentRef.current!;
-  //   // Hitung total ada berapa gambar
-  //   const childCount = slideContent.childElementCount;
-  //   // Hitung total lebar dari gambar tersebut
-  //   const totalWidth = firstImageWidth * childCount;
-  // }, []);
 
   // ====== MENGGUNAKAN BUTTON
   // Menentukan currentSlide
   const [currentSlide, setCurrentSlide] = useState(0);
-
+  const [translateX, setTranslateX] = useState(0);
   const handleLeftArrowClick = () => {
-    setCurrentSlide(currentSlide === 0 ? 0 : currentSlide - 1);
+    const maxSlide = Math.ceil(images.length / itemsPerSlide) - 1; // perbaiki maxSlidenya
+    setCurrentSlide(currentSlide === 0 ? maxSlide : currentSlide - 1);
+    console.log("dipanggil", currentSlide);
   };
 
   const handleRightArrowClick = () => {
     const maxSlide = Math.ceil(images.length / itemsPerSlide) - 1; // perbaiki maxSlidenya
-    console.log("ini max", maxSlide);
-    console.log("ini cure", currentSlide);
     setCurrentSlide(currentSlide === maxSlide ? 0 : currentSlide + 1);
+    console.log("dipanggil", currentSlide);
   };
 
   useEffect(() => {
     if (slideContentRef.current) {
-      slideContentRef.current.style.transform = `translate3d(-${containerWidth * currentSlide}px, 0, 0)`;
+      const translateXValue = containerWidth * currentSlide;
+      setTranslateX(translateXValue);
+      slideContentRef.current.style.transform = `translate3d(-${translateXValue}px, 0, 0)`;
     }
   }, [currentSlide, containerWidth]);
 
@@ -119,30 +114,40 @@ const Index = () => {
 
   // Ketika mouse mengklik pertama kali
   const dragStart = (e: any) => {
-    setIsDragging(true); // isi e itu adalah hasil dari eventnya entah itu onclick atau apa.
     // tangkap posisi awal
     prevClientX.current = e.clientX; //current merupakan properti dari objek yang dikembalikan oleh useRef.  properti current akan merujuk pada elemen DOM yang terkait dengan referensi tersebut setelah komponen berakhir. Dengan demikian, kita bisa menggunakan properti current untuk mengakses elemen DOM. Kita tidak perlu lagi menggunakan querySelector untuk mencari elemen DOM yang sesuai. Oh iya alasan kenapa kita menggunakan prevClientX karena kalo kita simpan ke dalam variable biasa maka akan hilang setelah diperbarui.
+    setIsDragging(true); // isi e itu adalah hasil dari eventnya entah itu onclick atau apa.
   };
-  let translateXValue = 0; //inisialisasi nilai translateX
-
-  // Ketiak mouse mendrag
+  let diff;
+  // ketika mouse mendrag
   const dragging = (e: any) => {
     if (!isDragging) return; // jika kondisi klik sudah false (artinya sudah ngga ngeklik lagi) maka dragging berhenti.
     const slideContent = slideContentRef.current!; //! tanda seru memastikan typescript bahwa kita memiliki slideContent
-    const diff = e.clientX - prevClientX.current;
+    //hitung diffnya, cara meghitung diff adalah prevClientX(ketika pas mouse klik pertama kali)dikurangi e.clientX sekarang.
+    diff = e.clientX - prevClientX.current;
+    console.log("diff", diff); //benar
     //Tambahkan nilai diff ke translateXValue
-    translateXValue += diff;
+    let translateXOnDrag = translateX;
+    console.log("ini adalah nilai translate X", translateX);
+    translateXOnDrag += diff;
+    console.log("translateX + diff", translateXOnDrag);
+
     // Bagian ini memberikan efek seperti di drag:
     e.preventDefault(); //BIAR gambar ga ke drag
-    slideContent.style.transform = `translateX(${translateXValue}px)`; //gunakan nilai translateXValue
-    prevClientX.current = e.clientX;
+    slideContent.style.transform = `translate3d(${translateXOnDrag}px,0,0)`; //gunakan nilai translateXValue
   };
 
   // Ketika mouse selesai mengklik
   const dragStop = () => {
     setIsDragging(false);
-    prevClientX.current = 0;
-    console.log("ini nilai translateX di stop", translateXValue);
+    console.log("dilepas!");
+    if (diff < -100) {
+      console.log("geser ke kanan");
+      handleRightArrowClick();
+    } else if (diff > 100) {
+      console.log("geser ke kiri");
+      handleLeftArrowClick();
+    }
   };
   return (
     // wrapper
