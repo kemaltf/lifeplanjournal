@@ -15,33 +15,33 @@ const images: string[] = [
   "https://via.placeholder.com/290/00FF00?text=9",
 ];
 
-const Index = () => {
+const Index = (): JSX.Element => {
   // lebar screen
-  const [screenWidth, setScreenWidth] = useState(0);
+  const [screenWidth, setScreenWidth] = useState<number>(0);
   // lebar kontainer
-  const [containerWidth, setContainerWidth] = useState(0);
+  const [containerWidth, setContainerWidth] = useState<number>(0);
   // lebar gambar pertama
-  const [firstImageWidth, setFirstImageWidth] = useState(0);
+  const [firstImageWidth, setFirstImageWidth] = useState<number>(0);
   // jumlah itemnya
-  const [itemsPerSlide, setItemsPerSlide] = useState(1);
+  const [itemsPerSlide, setItemsPerSlide] = useState<number>(1);
 
   // Fungsi mengambil lebar layar
-  const getScreenWidth = () => {
+  const getScreenWidth = (): void => {
     setScreenWidth(window.innerWidth);
   };
   // Fungsi mengambil lebar container
-  const getContainerWidth = () => {
+  const getContainerWidth = (): void => {
     if (slideContentRef.current) {
       setContainerWidth(slideContentRef.current.offsetWidth);
     }
   };
   // Fungsi mengambil lebar gambar pertama
-  const getFirstImageWidth = () => {
+  const getFirstImageWidth = (): void => {
     if (slideContentRef.current) {
       setFirstImageWidth((slideContentRef.current.querySelector(":first-child") as HTMLElement)?.offsetWidth);
     }
   };
-  const getItemsPerSlide = (screenWidth: number) => {
+  const getItemsPerSlide = (screenWidth: number): void => {
     if (screenWidth > 1023) {
       setItemsPerSlide(1);
     }
@@ -52,7 +52,7 @@ const Index = () => {
       setItemsPerSlide(1);
     }
   };
-  useEffect((): any => {
+  useEffect((): (() => void) => {
     // panggil saat pertama kali
     getFirstImageWidth();
     getContainerWidth();
@@ -60,7 +60,7 @@ const Index = () => {
     getItemsPerSlide(screenWidth);
 
     // panggil saat handleResize dipicu
-    const handleResize = () => {
+    const handleResize = (): void => {
       getFirstImageWidth();
       getContainerWidth();
       getScreenWidth();
@@ -79,19 +79,19 @@ const Index = () => {
 
   // ====== MENGGUNAKAN BUTTON
   // Menentukan currentSlide
-  const [currentSlide, setCurrentSlide] = useState(0);
-  const [translateX, setTranslateX] = useState(0);
-  const handleLeftArrowClick = () => {
+  const [currentSlide, setCurrentSlide] = useState<number>(0);
+  const [translateX, setTranslateX] = useState<number>(0);
+  const handleLeftArrowClick = (): void => {
     const maxSlide = Math.ceil(images.length / itemsPerSlide) - 1;
     setCurrentSlide(currentSlide === 0 ? maxSlide : currentSlide - 1);
   };
 
-  const handleRightArrowClick = () => {
+  const handleRightArrowClick = (): void => {
     const maxSlide = Math.ceil(images.length / itemsPerSlide) - 1;
     setCurrentSlide(currentSlide === maxSlide ? 0 : currentSlide + 1);
   };
 
-  useEffect(() => {
+  useEffect((): void => {
     if (slideContentRef.current) {
       const translateXValue = containerWidth * currentSlide;
       setTranslateX(translateXValue);
@@ -101,10 +101,10 @@ const Index = () => {
 
   // ================
   // Kontrol dragging
-  const [isDragging, setIsDragging] = useState(false);
+  const [isDragging, setIsDragging] = useState<boolean>(false);
 
   // tangkap posisi awalnya menggunakan useRef
-  const prevClientX = useRef(0);
+  const prevClientX = useRef<number>(0);
   const slideContentRef = useRef<HTMLDivElement>(null);
 
   // Ketika mouse mengklik pertama kali
@@ -113,7 +113,7 @@ const Index = () => {
     prevClientX.current = e.clientX;
     setIsDragging(true);
   };
-  let diff;
+  let diff: number;
   // ketika mouse mendrag
   const dragging = (e: any) => {
     if (!isDragging) return;
@@ -121,7 +121,7 @@ const Index = () => {
     let translateXOnDrag = translateX;
     translateXOnDrag -= diff;
 
-    slideContentRef.current.style.transform = `translate3d(-${translateXOnDrag}px,0,0)`;
+    slideContentRef.current!.style.transform = `translate3d(-${translateXOnDrag}px,0,0)`;
     e.preventDefault();
   };
 
@@ -134,7 +134,7 @@ const Index = () => {
       handleLeftArrowClick();
     } else {
       let translateXOnDrag = translateX;
-      slideContentRef.current.style.transform = `translate3d(-${translateXOnDrag}px,0,0)`;
+      slideContentRef.current!.style.transform = `translate3d(-${translateXOnDrag}px,0,0)`;
       e.preventDefault();
     }
   };
