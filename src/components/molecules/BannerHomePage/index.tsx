@@ -9,6 +9,7 @@ const images: string[] = [
   "https://via.placeholder.com/230/00FF00?text=3",
   "https://via.placeholder.com/240/000?text=4",
   "https://via.placeholder.com/250/00FF00?text=5",
+  "https://via.placeholder.com/240/000?text=6",
 ];
 const Index = (): JSX.Element => {
   const [screenWidth, setScreenWidth] = useState<number>(0); // screen width
@@ -161,25 +162,25 @@ const Index = (): JSX.Element => {
    * Get the difference position of axis X when mouse dragged on x axis
    * @param {TouchEvent} e
    */
+  let diffTouch: number;
   const touchHold = (e: React.TouchEvent<HTMLDivElement>) => {
     if (!isDragging) return;
-    diff = e.touches[0].clientX - prevClientX.current;
+    diffTouch = e.touches[0].clientX - prevClientX.current;
     let translateXOnDrag = translateX;
-    translateXOnDrag -= diff;
-
+    translateXOnDrag -= diffTouch;
     containerRef.current!.style.transform = `translate3d(-${translateXOnDrag}px,0,0)`;
-    // e.preventDefault();
   };
-
   /**
    * Change slide based on the diff when mouse end click
    * @param {TouchEvent} e
    */
   const touchStop = (e: React.TouchEvent<HTMLDivElement>) => {
     setIsDragging(false);
-    if (diff < -100) {
+    if (diffTouch < -150) {
+      console.log("right");
       handleArrowClick("right");
-    } else if (diff > 100) {
+    } else if (diffTouch > 150) {
+      console.log("left");
       handleArrowClick("left");
     } else {
       let translateXOnDrag = translateX;
