@@ -23,9 +23,13 @@ export const SlideContent = styled.div`
   transition: all 250ms ease-in-out;
   /* overflow: scroll; */
   width: 6096px;
+
   &.dragging {
     cursor: grab;
     scroll-behavior: auto;
+    transition: none;
+  }
+  &.clone {
     transition: none;
   }
 `;
@@ -41,11 +45,8 @@ export const ImageCarousel = styled.div<ImageCarouselProps>`
   height: 75vh;
   @media (min-width: 768px) and (max-width: 1023px) {
     height: 60vh;
-    flex: 0 0 calc(100% / 1); //satu layar ada 2 nanti ubah angka 3 nya ya
-    margin-right: 5px;
   }
   @media (max-width: 767px) {
-    flex: 0 0 calc(100% / 1); //satu layar ada 3 nanti ubah angka 3 nya ya
     height: 50vh;
   }
 `;

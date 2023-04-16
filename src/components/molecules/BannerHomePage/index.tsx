@@ -9,153 +9,208 @@ const images: string[] = [
   "https://via.placeholder.com/230/00FF00?text=3",
   "https://via.placeholder.com/240/000?text=4",
   "https://via.placeholder.com/250/00FF00?text=5",
-  "https://via.placeholder.com/260/000?text=6",
-  "https://via.placeholder.com/270/00FF00?text=7",
-  "https://via.placeholder.com/280/000?text=8",
-  "https://via.placeholder.com/290/00FF00?text=9",
 ];
-
 const Index = (): JSX.Element => {
-  // lebar screen
-  const [screenWidth, setScreenWidth] = useState<number>(0);
-  // lebar kontainer
-  const [containerWidth, setContainerWidth] = useState<number>(0);
-  // lebar gambar pertama
-  const [firstImageWidth, setFirstImageWidth] = useState<number>(0);
-  // jumlah itemnya
-  const [itemsPerSlide, setItemsPerSlide] = useState<number>(1);
+  const [screenWidth, setScreenWidth] = useState<number>(0); // screen width
+  const [containerWidth, setContainerWidth] = useState<number>(0); // container width
+  const [currentSlide, setCurrentSlide] = useState<number>(1); // current slide state
+  const [translateX, setTranslateX] = useState<number>(0); // translate x number
+  const [cloneClass, setCloneClass] = useState("");
+  const containerRef = useRef<HTMLDivElement>(null); // lebar container
 
-  // Fungsi mengambil lebar layar
+  // dragging setting mouse or touch
+  const [isDragging, setIsDragging] = useState<boolean>(false);
+  const prevClientX = useRef<number>(0);
+
+  /**
+   * Calculate container width
+   */
+  const getContainerWidth = (): void => {
+    setContainerWidth(containerRef.current!.offsetWidth);
+  };
+
+  /**
+   * Calculate screen width
+   */
   const getScreenWidth = (): void => {
     setScreenWidth(window.innerWidth);
   };
-  // Fungsi mengambil lebar container
-  const getContainerWidth = (): void => {
-    if (slideContentRef.current) {
-      setContainerWidth(slideContentRef.current.offsetWidth);
-    }
-  };
-  // Fungsi mengambil lebar gambar pertama
-  const getFirstImageWidth = (): void => {
-    if (slideContentRef.current) {
-      setFirstImageWidth((slideContentRef.current.querySelector(":first-child") as HTMLElement)?.offsetWidth);
-    }
-  };
-  const getItemsPerSlide = (screenWidth: number): void => {
-    if (screenWidth > 1023) {
-      setItemsPerSlide(1);
-    }
-    if (screenWidth >= 768 && screenWidth <= 1023) {
-      setItemsPerSlide(1);
-    }
-    if (screenWidth < 768) {
-      setItemsPerSlide(1);
-    }
-  };
-  useEffect((): (() => void) => {
-    // panggil saat pertama kali
-    getFirstImageWidth();
-    getContainerWidth();
-    getScreenWidth();
-    getItemsPerSlide(screenWidth);
 
-    // panggil saat handleResize dipicu
+  /**
+   * Calculate screen width when mounting for the first time
+   */
+  useEffect((): (() => void) => {
+    getScreenWidth();
+    getContainerWidth();
     const handleResize = (): void => {
-      getFirstImageWidth();
       getContainerWidth();
       getScreenWidth();
-      getItemsPerSlide(screenWidth);
     };
-
     // panggil handleResize saat terdapat perubahan size window
     window.addEventListener("resize", handleResize);
-    console.log("ini screeenWidth", screenWidth, containerWidth, firstImageWidth, itemsPerSlide); // jika ingin lihat perubahannya console.log disini
-
     // lepas Event Listener setelah komponen di unmount
     return () => {
       window.removeEventListener("resize", handleResize);
     };
   }, [screenWidth]);
 
-  // ====== MENGGUNAKAN BUTTON
-  // Menentukan currentSlide
-  const [currentSlide, setCurrentSlide] = useState<number>(0);
-  const [translateX, setTranslateX] = useState<number>(0);
-  const handleLeftArrowClick = (): void => {
-    const maxSlide = Math.ceil(images.length / itemsPerSlide) - 1;
-    setCurrentSlide(currentSlide === 0 ? maxSlide : currentSlide - 1);
+  /**
+   * Function to handle arrow click
+   *
+   * @param {string} direction - "left | right"
+   */
+  const handleArrowClick = (direction: "left" | "right") => {
+    let newCurrentSlide = currentSlide;
+    const maxSlide = images.length + 2; //7
+    if (direction === "left") {
+      newCurrentSlide = (currentSlide - 1 + maxSlide) % maxSlide;
+      if (currentSlide === 1) {
+        setCloneClass("clone");
+        newCurrentSlide = (currentSlide - 2 + maxSlide) % maxSlide;
+        console.log(maxSlide);
+        setTimeout(() => {
+          setCloneClass("");
+          newCurrentSlide = (currentSlide - 3 + maxSlide) % maxSlide;
+          setCurrentSlide(newCurrentSlide);
+          setTranslateX(newCurrentSlide * containerWidth);
+        }, 0);
+      }
+      setCurrentSlide(newCurrentSlide);
+      setTranslateX(newCurrentSlide * containerWidth);
+    } else if (direction === "right") {
+      if (currentSlide === maxSlide - 1) {
+        setCloneClass("clone");
+        newCurrentSlide = (currentSlide + 2) % maxSlide;
+        setTimeout(() => {
+          setCloneClass("");
+          newCurrentSlide = (currentSlide + 3) % maxSlide;
+          setCurrentSlide(newCurrentSlide);
+          setTranslateX(newCurrentSlide * containerWidth);
+        }, 0);
+      } else {
+        newCurrentSlide = (currentSlide + 1) % maxSlide;
+      }
+      setCurrentSlide(newCurrentSlide);
+      setTranslateX(newCurrentSlide * containerWidth);
+    }
   };
 
-  const handleRightArrowClick = (): void => {
-    const maxSlide = Math.ceil(images.length / itemsPerSlide) - 1;
-    setCurrentSlide(currentSlide === maxSlide ? 0 : currentSlide + 1);
-  };
-
+  /**
+   * Function to change current slide and translate
+   *
+   */
   useEffect((): void => {
-    if (slideContentRef.current) {
+    console.log("current slide", currentSlide);
+    if (containerRef.current) {
       const translateXValue = containerWidth * currentSlide;
       setTranslateX(translateXValue);
-      slideContentRef.current.style.transform = `translate3d(-${translateXValue}px, 0, 0)`;
+      containerRef.current.style.transform = `translate3d(-${translateXValue}px, 0, 0)`;
     }
   }, [currentSlide, containerWidth]);
 
-  // ================
-  // Kontrol dragging
-  const [isDragging, setIsDragging] = useState<boolean>(false);
-
-  // tangkap posisi awalnya menggunakan useRef
-  const prevClientX = useRef<number>(0);
-  const slideContentRef = useRef<HTMLDivElement>(null);
-
-  // Ketika mouse mengklik pertama kali
-  const dragStart = (e: any) => {
-    // tangkap posisi awal
+  /**
+   * Get the first position of axis X when mouse clicked first time
+   * @param {MouseEvent} e
+   */
+  const dragStart = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     prevClientX.current = e.clientX;
     setIsDragging(true);
   };
+
+  /**
+   * Get the difference position of axis X when mouse dragged on x axis
+   * @param {MouseEvent} e
+   */
   let diff: number;
-  // ketika mouse mendrag
-  const dragging = (e: any) => {
+  const dragging = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     if (!isDragging) return;
     diff = e.clientX - prevClientX.current;
     let translateXOnDrag = translateX;
     translateXOnDrag -= diff;
-
-    slideContentRef.current!.style.transform = `translate3d(-${translateXOnDrag}px,0,0)`;
+    containerRef.current!.style.transform = `translate3d(-${translateXOnDrag}px,0,0)`;
     e.preventDefault();
   };
 
-  // Ketika mouse selesai mengklik
-  const dragStop = (e: any) => {
+  /**
+   * Change slide based on the diff when mouse end click
+   * @param {MouseEvent} e
+   */
+  const dragStop = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     setIsDragging(false);
     if (diff < -100) {
-      handleRightArrowClick();
+      handleArrowClick("right");
     } else if (diff > 100) {
-      handleLeftArrowClick();
+      handleArrowClick("left");
     } else {
       let translateXOnDrag = translateX;
-      slideContentRef.current!.style.transform = `translate3d(-${translateXOnDrag}px,0,0)`;
+      containerRef.current!.style.transform = `translate3d(-${translateXOnDrag}px,0,0)`;
       e.preventDefault();
     }
   };
+
+  /**
+   * Get the first position of axis X when touch first time
+   * @param {TouchEvent} e
+   */
+  const touchStart = (e: React.TouchEvent<HTMLDivElement>) => {
+    prevClientX.current = e.touches[0].clientX;
+    setIsDragging(true);
+  };
+
+  /**
+   * Get the difference position of axis X when mouse dragged on x axis
+   * @param {TouchEvent} e
+   */
+  const touchHold = (e: React.TouchEvent<HTMLDivElement>) => {
+    if (!isDragging) return;
+    diff = e.touches[0].clientX - prevClientX.current;
+    let translateXOnDrag = translateX;
+    translateXOnDrag -= diff;
+
+    containerRef.current!.style.transform = `translate3d(-${translateXOnDrag}px,0,0)`;
+    // e.preventDefault();
+  };
+
+  /**
+   * Change slide based on the diff when mouse end click
+   * @param {TouchEvent} e
+   */
+  const touchStop = (e: React.TouchEvent<HTMLDivElement>) => {
+    setIsDragging(false);
+    if (diff < -100) {
+      handleArrowClick("right");
+    } else if (diff > 100) {
+      handleArrowClick("left");
+    } else {
+      let translateXOnDrag = translateX;
+      containerRef.current!.style.transform = `translate3d(-${translateXOnDrag}px,0,0)`;
+      e.preventDefault();
+    }
+  };
+
   return (
-    // wrapper
     <ContainerStyled>
-      {/* button left */}
       <ArrowButtonLeft>
-        <Image src="/icons/arrow.svg" width={40} height={40} alt="" onClick={handleLeftArrowClick} />
+        <Image src="/icons/arrow.svg" width={40} height={40} alt="" onClick={() => handleArrowClick("left")} />
       </ArrowButtonLeft>
-      {/* carousel nya */}
-      <SlideContent className={isDragging ? "dragging" : ""} ref={slideContentRef} onMouseDown={dragStart} onMouseMove={dragging} onMouseUp={dragStop}>
-        {/* imagenya */}
+      <SlideContent
+        className={`${isDragging ? "dragging" : ""} ${cloneClass ? "clone" : ""}`}
+        ref={containerRef}
+        onMouseDown={dragStart}
+        onMouseMove={dragging}
+        onMouseUp={dragStop}
+        onTouchStart={touchStart}
+        onTouchMove={touchHold}
+        onTouchEnd={touchStop}
+      >
+        <ImageCarousel image={images[images.length - 1]} key={-1}></ImageCarousel>
         {images.map((image: string, index) => (
           <ImageCarousel image={image} key={index}></ImageCarousel>
-          // <img src={image} key={index}></img>
         ))}
+        <ImageCarousel image={images[0]} key={images.length}></ImageCarousel>
       </SlideContent>
-      {/* button right */}
       <ArrowButtonRight>
-        <ArrowImageRight src="/icons/arrow.svg" width={40} height={40} alt="" onClick={handleRightArrowClick} />
+        <ArrowImageRight src="/icons/arrow.svg" width={40} height={40} alt="" onClick={() => handleArrowClick("right")} />
       </ArrowButtonRight>
     </ContainerStyled>
   );
