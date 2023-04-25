@@ -68,7 +68,6 @@ const Index = (): JSX.Element => {
       if (currentSlide === 1) {
         setCloneClass("clone");
         newCurrentSlide = (currentSlide - 2 + maxSlide) % maxSlide;
-        console.log(maxSlide);
         setTimeout(() => {
           setCloneClass("");
           newCurrentSlide = (currentSlide - 3 + maxSlide) % maxSlide;
@@ -101,7 +100,6 @@ const Index = (): JSX.Element => {
    *
    */
   useEffect((): void => {
-    console.log("current slide", currentSlide);
     if (containerRef.current) {
       const translateXValue = containerWidth * currentSlide;
       setTranslateX(translateXValue);
@@ -177,10 +175,8 @@ const Index = (): JSX.Element => {
   const touchStop = (e: React.TouchEvent<HTMLDivElement>) => {
     setIsDragging(false);
     if (diffTouch < -150) {
-      console.log("right");
       handleArrowClick("right");
     } else if (diffTouch > 150) {
-      console.log("left");
       handleArrowClick("left");
     } else {
       let translateXOnDrag = translateX;
