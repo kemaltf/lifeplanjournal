@@ -1,6 +1,7 @@
 import CollectionCard from "../components/organism/CollectionCard";
 import Head from "next/head";
 import BannerHomePage from "../components/molecules/BannerHomePage";
+import SlideShow from "../components/molecules/SlideShow";
 export default function Home() {
   return (
     <>
