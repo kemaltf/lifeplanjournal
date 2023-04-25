@@ -1,40 +1,23 @@
 import { ContainerPad } from "@/styles/SharedStyles";
-import React from "react";
-import { ContainerImage, ImageBig, ContainerDesc, ContainerPadStyled, ArrowButtonLeft, ArrowButtonRight, MiniSlider, SliderBox, SlideContent } from "./ImageSlideCarousel";
+import React, { useState, useRef, useEffect } from "react";
+import { ContainerImage, ContainerBigImage, ContainerDesc, ContainerPadStyled } from "./ImageSlideCarousel";
 import Image from "next/image";
 import Carousel from "../Carousel";
+import SlideShow from "../../molecules/SlideShow";
+import SlideShowControl from "../../molecules/SlideShowControl";
 
 type Props = {};
-const images: string[] = [
-  "https://via.placeholder.com/210/00FF00?text=1",
-  "https://via.placeholder.com/220/00FF00?text=2",
-  "https://via.placeholder.com/230/00FF00?text=3",
-  "https://via.placeholder.com/240/00FF00?text=4",
-  "https://via.placeholder.com/250/00FF00?text=5",
-  "https://via.placeholder.com/260/00FF00?text=6",
-  "https://via.placeholder.com/270/00FF00?text=7",
-  "https://via.placeholder.com/280/00FF00?text=8",
-  "https://via.placeholder.com/290/00FF00?text=9",
-];
+
 const index = (props: Props) => {
+  const [currentImage, setCurrentImage] = useState(0);
+  console.log("current image dari ", currentImage);
   return (
     <ContainerPadStyled>
       <ContainerImage>
-        <SlideContent>
-          {images.map((image, index) => (
-            <ImageBig key="index">
-              <img src={image} alt=""></img>
-            </ImageBig>
-          ))}
-        </SlideContent>
-
-        {/* <MiniSlider>
-          {images.map((image, index) => (
-            <SliderBox>
-              <img src={image} alt=""></img>
-            </SliderBox>
-          ))}
-        </MiniSlider> */}
+        <ContainerBigImage>
+          <SlideShow currentImage={currentImage} setCurrentImage={setCurrentImage}></SlideShow>
+        </ContainerBigImage>
+        <SlideShowControl setCurrentImage={setCurrentImage}></SlideShowControl>
       </ContainerImage>
 
       <ContainerDesc>
