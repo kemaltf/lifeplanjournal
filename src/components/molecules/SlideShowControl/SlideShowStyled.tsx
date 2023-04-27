@@ -22,7 +22,7 @@ export const SlideContent = styled.div`
   white-space: nowrap;
   transition: all 500ms ease-in-out;
   /* overflow: scroll; */
-  width: 6096px;
+  /* width: 6096px; */
 
   &.dragging {
     cursor: grab;

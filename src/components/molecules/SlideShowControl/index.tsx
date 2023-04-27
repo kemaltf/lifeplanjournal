@@ -2,15 +2,13 @@ import Image from "next/image";
 import React, { useState, useRef, useEffect } from "react";
 import { ArrowButtonLeft, ArrowButtonRight, ContainerStyled, ImageCarousel, SlideContent, ArrowImageRight, ImageStyled } from "./SlideShowStyled";
 
-// Ceritanya gambarnya dari API, setelah API jadi kita replace
-const images: string[] = [
-  "https://via.placeholder.com/210/00FF00?text=1",
-  "https://via.placeholder.com/220/000?text=2",
-  "https://via.placeholder.com/230/00FF00?text=3",
-  "https://via.placeholder.com/230/00FF00?text=3",
-  "https://via.placeholder.com/230/00FF00?text=3",
-];
-const Index = ({ setCurrentImage }): JSX.Element => {
+type IndexProps = {
+  images: string[];
+  currentImage: number;
+  setCurrentImage: (index: number) => void;
+  setDurationMs: (index: number) => void;
+};
+const Index = ({ images, currentImage, setCurrentImage, setDurationMs }: IndexProps): JSX.Element => {
   const [screenWidth, setScreenWidth] = useState<number>(0); // screen width
   const [containerWidth, setContainerWidth] = useState<number>(0); // container width
   const [currentSlide, setCurrentSlide] = useState<number>(0); // current slide state
@@ -21,6 +19,7 @@ const Index = ({ setCurrentImage }): JSX.Element => {
   const [imageWidth, setImageWidth] = useState(0);
   const [imageNum, setImageNum] = useState(0);
   const firstImageRef = useRef<HTMLImageElement>(null);
+
   const getFirstImageWidth = () => {
     if (firstImageRef.current) {
       setFirstImageWidth(firstImageRef.current.offsetWidth);
@@ -30,9 +29,14 @@ const Index = ({ setCurrentImage }): JSX.Element => {
   const [isDragging, setIsDragging] = useState<boolean>(false);
   const prevClientX = useRef<number>(0);
   const handleImageClick = (index: number) => {
-    console.log(index);
     setCurrentSlide(index);
     setCurrentImage(index);
+    const prevSlide = currentImage;
+    const diffSlide = Math.abs(index - prevSlide);
+    console.log(diffSlide);
+    const totalDuration = 200 + 200 * diffSlide;
+    console.log(totalDuration);
+    setDurationMs(totalDuration);
   };
   /**
    * Calculate container width
@@ -158,7 +162,6 @@ const Index = ({ setCurrentImage }): JSX.Element => {
         onMouseDown={dragStart}
         onMouseMove={dragging}
         onMouseUp={dragStop}
-        onMouseLeave={dragStop}
         onTouchStart={touchStart}
         onTouchMove={touchHold}
         onTouchEnd={touchStop}
