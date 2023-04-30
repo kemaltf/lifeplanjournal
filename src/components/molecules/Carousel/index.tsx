@@ -7,9 +7,12 @@ type IndexProps = {
   currentImage: number;
   setCurrentImage: (index: number) => void;
   durationMs: number;
-  setDurationMs: (index: number) => void;
+  setDurationMs?: (index: number) => void;
+  loop: boolean;
+  arrow: boolean;
+  children: React.ReactNode;
 };
-const Index = ({ images, currentImage, setCurrentImage, durationMs, setDurationMs }: IndexProps): JSX.Element => {
+const Index = ({ images, currentImage, setCurrentImage, durationMs, setDurationMs, arrow, loop, children }: IndexProps): JSX.Element => {
   //=== usefull function ===//
   // screenWidth, containerWidth
   const containerRef = useRef<HTMLDivElement>(null); // reference the container
@@ -30,9 +33,7 @@ const Index = ({ images, currentImage, setCurrentImage, durationMs, setDurationM
     setCurrentImage(index);
     const prevSlide = currentImage;
     const diffSlide = Math.abs(index - prevSlide);
-    console.log(diffSlide);
     const totalDuration = 200 + 200 * diffSlide;
-    console.log(totalDuration);
     setDurationMs(totalDuration);
   };
   // == end == //
@@ -123,7 +124,7 @@ const Index = ({ images, currentImage, setCurrentImage, durationMs, setDurationM
       containerRef.current.style.transform = `translate3d(${-translateXValue}px, 0, 0)`;
     }
     setPrevSlide(currentSlide);
-  }, [currentSlide, containerWidth]);
+  }, [currentSlide, prevSlide, containerWidth]);
 
   //== MOUSE DRAG SETTING ==//
   let diff: number;
@@ -135,35 +136,39 @@ const Index = ({ images, currentImage, setCurrentImage, durationMs, setDurationM
   const dragStart = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     prevClientX.current = e.clientX;
     setIsDragging(true);
+    document.addEventListener("mousemove", dragging);
+    document.addEventListener("mouseup", dragStop);
     e.preventDefault();
   };
+
   /**
    * Get the difference position of axis X when mouse dragged on x axis
    * @param {MouseEvent} e
    */
-  const dragging = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+  const dragging = (e: any) => {
     if (!isDragging) return;
     diff = e.clientX - prevClientX.current;
     let translateXOnDrag = translateX;
     translateXOnDrag -= diff;
     containerRef.current!.style.transform = `translate3d(${-translateXOnDrag}px,0,0)`;
-
     e.preventDefault();
   };
   /**
    * Change slide based on the diff when mouse end click
    * @param {MouseEvent} e
    */
-  const dragStop = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+  const dragStop = (e: any) => {
     setIsDragging(false);
+    document.removeEventListener("mousemove", dragging);
+    document.removeEventListener("mouseup", dragStop);
     if (diff < -50) {
       handleArrowClick("right");
     } else if (diff > 50) {
       handleArrowClick("left");
-    } else {
-      let translateXOnDrag = translateX;
-      containerRef.current!.style.transform = `translate3d(${-translateXOnDrag}px,0,0)`;
     }
+    let translateXOnDrag = translateX;
+    console.log(containerRef.current);
+    containerRef.current!.style.transform = `translate3d(${-translateXOnDrag}px,0,0)`;
     e.preventDefault();
   };
 
@@ -172,47 +177,54 @@ const Index = ({ images, currentImage, setCurrentImage, durationMs, setDurationM
    * Get the first position of axis X when touch first time
    * @param {TouchEvent} e
    */
-  const touchStart = (e: React.TouchEvent<HTMLDivElement>) => {
+  let diffTouch: number;
+
+  const touchStart = (e: any) => {
     prevClientX.current = e.touches[0].clientX;
     setIsDragging(true);
-    e.preventDefault();
+    document.addEventListener("touchmove", touchHold);
+    document.addEventListener("touchend", touchStop);
   };
   /**
    * Get the difference position of axis X when mouse dragged on x axis
    * @param {TouchEvent} e
    */
-  let diffTouch: number;
-  const touchHold = (e: React.TouchEvent<HTMLDivElement>) => {
+  const touchHold = (e: any) => {
     if (!isDragging) return;
     diffTouch = e.touches[0].clientX - prevClientX.current;
     let translateXOnDrag = translateX;
     translateXOnDrag -= diffTouch;
     containerRef.current!.style.transform = `translate3d(${-translateXOnDrag}px,0,0)`;
-    e.preventDefault();
   };
   /**
    * Change slide based on the diff when mouse end click
    * @param {TouchEvent} e
    */
-  const touchStop = (e: React.TouchEvent<HTMLDivElement>) => {
+  const touchStop = (e: any) => {
     setIsDragging(false);
-    if (diffTouch < -150) {
+    document.removeEventListener("touchmove", touchHold);
+    document.removeEventListener("touchend", touchStop);
+    if (diffTouch < -50) {
       handleArrowClick("right");
-    } else if (diffTouch > 150) {
+    } else if (diffTouch > 50) {
       handleArrowClick("left");
-    } else {
-      let translateXOnDrag = translateX;
-      containerRef.current!.style.transform = `translate3d(${-translateXOnDrag}px,0,0)`;
     }
-    e.preventDefault();
+    let translateXOnDrag = translateX;
+    containerRef.current!.style.transform = `translate3d(${-translateXOnDrag}px,0,0)`;
   };
 
   return (
     <ContainerStyled>
-      {currentImage !== 0 && (
+      {arrow && loop ? (
         <ArrowButtonLeft>
           <Image src="/icons/arrow.svg" width={40} height={40} alt="" onClick={() => handleArrowClick("left")} />
         </ArrowButtonLeft>
+      ) : (
+        currentImage !== 0 && (
+          <ArrowButtonLeft>
+            <Image src="/icons/arrow.svg" width={40} height={40} alt="" onClick={() => handleArrowClick("left")} />
+          </ArrowButtonLeft>
+        )
       )}
       <SlideContent
         className={`${isDragging ? "dragging" : ""} `}
@@ -223,17 +235,21 @@ const Index = ({ images, currentImage, setCurrentImage, durationMs, setDurationM
         onTouchStart={touchStart}
         onTouchMove={touchHold}
         onTouchEnd={touchStop}
-        onMouseLeave={dragStop}
         durationMs={durationMs}
       >
-        {images.map((image: string, index) => (
-          <Image src={image} key={index} alt="" width={500} height={500} layout="responsive"></Image>
-        ))}
+        {children}
       </SlideContent>
-      {currentImage !== images.length - 1 && (
+
+      {arrow && loop ? (
         <ArrowButtonRight>
           <ArrowImageRight src="/icons/arrow.svg" width={40} height={40} alt="" onClick={() => handleArrowClick("right")} />
         </ArrowButtonRight>
+      ) : (
+        currentImage !== images.length - 1 && (
+          <ArrowButtonRight>
+            <ArrowImageRight src="/icons/arrow.svg" width={40} height={40} alt="" onClick={() => handleArrowClick("right")} />
+          </ArrowButtonRight>
+        )
       )}
     </ContainerStyled>
   );
