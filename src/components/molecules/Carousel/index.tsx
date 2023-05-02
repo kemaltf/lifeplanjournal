@@ -4,15 +4,16 @@ import { ArrowButtonLeft, ArrowButtonRight, ContainerStyled, ImageCarousel, Slid
 
 type IndexProps = {
   images: string[];
-  currentImage: number;
-  setCurrentImage: (index: number) => void;
+  currentImage?: number;
+  setCurrentImage?: (index: number) => void;
   durationMs: number;
   setDurationMs?: (index: number) => void;
   loop: boolean;
   arrow: boolean;
+  slide?: boolean;
   children: React.ReactNode;
 };
-const Index = ({ images, currentImage, setCurrentImage, durationMs, setDurationMs, arrow, loop, children }: IndexProps): JSX.Element => {
+const Index = ({ images, currentImage = 0, setCurrentImage, durationMs = 250, setDurationMs, arrow, loop, children, slide = true }: IndexProps): JSX.Element => {
   //=== usefull function ===//
   // screenWidth, containerWidth
   const containerRef = useRef<HTMLDivElement>(null); // reference the container
@@ -28,26 +29,19 @@ const Index = ({ images, currentImage, setCurrentImage, durationMs, setDurationM
       setFirstImageWidth(firstImageRef.current.offsetWidth);
     }
   };
-  const handleImageClick = (index: number) => {
-    setCurrentSlide(index);
-    setCurrentImage(index);
-    const prevSlide = currentImage;
-    const diffSlide = Math.abs(index - prevSlide);
-    const totalDuration = 200 + 200 * diffSlide;
-    setDurationMs(totalDuration);
-  };
+
   // == end == //
   //=== slider function ===//
   const prevClientX = useRef<number>(0); // position when the first click
-  const [currentSlide, setCurrentSlide] = useState<number>(0); // current slide state
+  // const [currentSlide, setCurrentSlide] = useState<number>(0); // current slide state
   const [prevSlide, setPrevSlide] = useState<number>(0); // previous slide state
   const [translateX, setTranslateX] = useState<number>(0); // translate x number
   const [isDragging, setIsDragging] = useState<boolean>(false); // dragging state
 
   // Update state di dalam SlideShow ketika currentImage berubah
-  if (currentImage !== currentSlide) {
-    setCurrentSlide(currentImage);
-  }
+  // if (currentImage !== currentSlide) {
+  //   setCurrentSlide(currentImage);
+  // }
 
   /**
    * Calculate container width
@@ -88,12 +82,12 @@ const Index = ({ images, currentImage, setCurrentImage, durationMs, setDurationM
    * @param {string} direction - "left | right"
    */
   const handleArrowClick = (direction: "left" | "right") => {
-    let newCurrentSlide = currentSlide;
+    let newCurrentSlide = currentImage;
     const maxSlide = images.length;
     if (direction === "left") {
-      if (currentSlide !== 0) {
-        newCurrentSlide = (currentSlide - 1 + maxSlide) % maxSlide;
-        setCurrentSlide(newCurrentSlide);
+      if (currentImage !== 0) {
+        newCurrentSlide = (currentImage - 1 + maxSlide) % maxSlide;
+        // setCurrentSlide(newCurrentSlide);
         setCurrentImage(newCurrentSlide);
         setTranslateX(newCurrentSlide * containerWidth);
       } else {
@@ -101,9 +95,9 @@ const Index = ({ images, currentImage, setCurrentImage, durationMs, setDurationM
         containerRef.current!.style.transform = `translate3d(${-translateXOnDrag}px,0,0)`;
       }
     } else if (direction === "right") {
-      if (currentSlide !== maxSlide - 1) {
-        newCurrentSlide = (currentSlide + 1) % maxSlide;
-        setCurrentSlide(newCurrentSlide);
+      if (currentImage !== maxSlide - 1) {
+        newCurrentSlide = (currentImage + 1) % maxSlide;
+        // setCurrentSlide(newCurrentSlide);
         setCurrentImage(newCurrentSlide);
         setTranslateX(newCurrentSlide * containerWidth);
       } else {
@@ -119,12 +113,12 @@ const Index = ({ images, currentImage, setCurrentImage, durationMs, setDurationM
    */
   useEffect((): void => {
     if (containerRef.current) {
-      const translateXValue = containerWidth * currentSlide;
+      const translateXValue = containerWidth * currentImage;
       setTranslateX(translateXValue);
       containerRef.current.style.transform = `translate3d(${-translateXValue}px, 0, 0)`;
     }
-    setPrevSlide(currentSlide);
-  }, [currentSlide, prevSlide, containerWidth]);
+    setPrevSlide(currentImage);
+  }, [currentImage, prevSlide, containerWidth]);
 
   //== MOUSE DRAG SETTING ==//
   let diff: number;
@@ -136,6 +130,7 @@ const Index = ({ images, currentImage, setCurrentImage, durationMs, setDurationM
   const dragStart = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     prevClientX.current = e.clientX;
     setIsDragging(true);
+    // document.addEventListener("mousedown", starting);
     document.addEventListener("mousemove", dragging);
     document.addEventListener("mouseup", dragStop);
     e.preventDefault();
@@ -147,6 +142,7 @@ const Index = ({ images, currentImage, setCurrentImage, durationMs, setDurationM
    */
   const dragging = (e: any) => {
     if (!isDragging) return;
+
     diff = e.clientX - prevClientX.current;
     let translateXOnDrag = translateX;
     translateXOnDrag -= diff;
@@ -158,20 +154,22 @@ const Index = ({ images, currentImage, setCurrentImage, durationMs, setDurationM
    * @param {MouseEvent} e
    */
   const dragStop = (e: any) => {
+    console.log("when stop", diff);
     setIsDragging(false);
     document.removeEventListener("mousemove", dragging);
     document.removeEventListener("mouseup", dragStop);
-    if (diff < -50) {
-      handleArrowClick("right");
-    } else if (diff > 50) {
-      handleArrowClick("left");
+    if (slide === true) {
+      if (diff < -50) {
+        handleArrowClick("right");
+      } else if (diff > 50) {
+        handleArrowClick("left");
+      }
     }
+
     let translateXOnDrag = translateX;
-    console.log(containerRef.current);
     containerRef.current!.style.transform = `translate3d(${-translateXOnDrag}px,0,0)`;
     e.preventDefault();
   };
-
   //== TOUCH DRAG SETTING ==//
   /**
    * Get the first position of axis X when touch first time
@@ -215,17 +213,18 @@ const Index = ({ images, currentImage, setCurrentImage, durationMs, setDurationM
 
   return (
     <ContainerStyled>
-      {arrow && loop ? (
-        <ArrowButtonLeft>
-          <Image src="/icons/arrow.svg" width={40} height={40} alt="" onClick={() => handleArrowClick("left")} />
-        </ArrowButtonLeft>
-      ) : (
-        currentImage !== 0 && (
+      {arrow &&
+        (loop ? (
           <ArrowButtonLeft>
             <Image src="/icons/arrow.svg" width={40} height={40} alt="" onClick={() => handleArrowClick("left")} />
           </ArrowButtonLeft>
-        )
-      )}
+        ) : (
+          currentImage !== 0 && (
+            <ArrowButtonLeft>
+              <Image src="/icons/arrow.svg" width={40} height={40} alt="" onClick={() => handleArrowClick("left")} />
+            </ArrowButtonLeft>
+          )
+        ))}
       <SlideContent
         className={`${isDragging ? "dragging" : ""} `}
         ref={containerRef}
@@ -240,17 +239,18 @@ const Index = ({ images, currentImage, setCurrentImage, durationMs, setDurationM
         {children}
       </SlideContent>
 
-      {arrow && loop ? (
-        <ArrowButtonRight>
-          <ArrowImageRight src="/icons/arrow.svg" width={40} height={40} alt="" onClick={() => handleArrowClick("right")} />
-        </ArrowButtonRight>
-      ) : (
-        currentImage !== images.length - 1 && (
+      {arrow &&
+        (loop ? (
           <ArrowButtonRight>
             <ArrowImageRight src="/icons/arrow.svg" width={40} height={40} alt="" onClick={() => handleArrowClick("right")} />
           </ArrowButtonRight>
-        )
-      )}
+        ) : (
+          currentImage !== images.length - 1 && (
+            <ArrowButtonRight>
+              <ArrowImageRight src="/icons/arrow.svg" width={40} height={40} alt="" onClick={() => handleArrowClick("right")} />
+            </ArrowButtonRight>
+          )
+        ))}
     </ContainerStyled>
   );
 };
