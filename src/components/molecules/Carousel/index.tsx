@@ -131,8 +131,17 @@ const Index = ({ images, currentImage = 0, setCurrentImage, durationMs = 250, se
     prevClientX.current = e.clientX;
     setIsDragging(true);
     // document.addEventListener("mousedown", starting);
-    document.addEventListener("mousemove", dragging);
+    document.addEventListener("mousemove", moving);
     document.addEventListener("mouseup", dragStop);
+    e.preventDefault();
+  };
+
+  const moving = (e: any) => {
+    diff = e.clientX - prevClientX.current;
+    console.log("diff", diff);
+    let translateXOnDrag = translateX;
+    translateXOnDrag -= diff;
+    containerRef.current!.style.transform = `translate3d(${-translateXOnDrag}px,0,0)`;
     e.preventDefault();
   };
 
@@ -154,9 +163,8 @@ const Index = ({ images, currentImage = 0, setCurrentImage, durationMs = 250, se
    * @param {MouseEvent} e
    */
   const dragStop = (e: any) => {
-    console.log("when stop", diff);
     setIsDragging(false);
-    document.removeEventListener("mousemove", dragging);
+    document.removeEventListener("mousemove", moving);
     document.removeEventListener("mouseup", dragStop);
     if (slide === true) {
       if (diff < -50) {
@@ -225,17 +233,7 @@ const Index = ({ images, currentImage = 0, setCurrentImage, durationMs = 250, se
             </ArrowButtonLeft>
           )
         ))}
-      <SlideContent
-        className={`${isDragging ? "dragging" : ""} `}
-        ref={containerRef}
-        onMouseDown={dragStart}
-        onMouseMove={dragging}
-        onMouseUp={dragStop}
-        onTouchStart={touchStart}
-        onTouchMove={touchHold}
-        onTouchEnd={touchStop}
-        durationMs={durationMs}
-      >
+      <SlideContent className={`${isDragging ? "dragging" : ""} `} ref={containerRef} onMouseDown={dragStart} onMouseUp={dragStop} onTouchStart={touchStart} onTouchMove={touchHold} onTouchEnd={touchStop} durationMs={durationMs}>
         {children}
       </SlideContent>
 
