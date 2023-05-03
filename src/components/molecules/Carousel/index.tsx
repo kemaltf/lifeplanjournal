@@ -13,7 +13,7 @@ type IndexProps = {
   slide?: boolean;
   children: React.ReactNode;
 };
-const Index = ({ images, currentImage = 0, setCurrentImage, durationMs = 250, setDurationMs, arrow = true, loop = false, slide = true, children }: IndexProps): JSX.Element => {
+const Index = ({ images, currentImage = 0, setCurrentImage, durationMs = 400, setDurationMs, arrow = true, loop = false, slide = true, children }: IndexProps): JSX.Element => {
   //=== usefull function ===//
   const containerRef = useRef<HTMLDivElement>(null); // reference the container
   const [screenWidth, setScreenWidth] = useState<number>(0); // screen width
