@@ -1,7 +1,16 @@
 import CollectionCard from "../components/organism/CollectionCard";
 import Head from "next/head";
 import BannerHomePage from "../components/molecules/BannerHomePage";
-import SlideShow from "../components/molecules/SlideShow";
+import Hero from "../components/molecules/Hero";
+const images: string[] = [
+  "https://via.placeholder.com/210/00FF00?text=1",
+  "https://via.placeholder.com/220/000?text=2",
+  "https://via.placeholder.com/230/00FF00?text=3",
+  "https://via.placeholder.com/240/000?text=4",
+  "https://via.placeholder.com/250/00FF00?text=5",
+  "https://via.placeholder.com/240/000?text=6",
+];
+
 export default function Home() {
   return (
     <>
@@ -11,7 +20,7 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <BannerHomePage></BannerHomePage>
+      <Hero images={images}></Hero>
       <CollectionCard></CollectionCard>
     </>
   );
