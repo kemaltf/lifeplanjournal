@@ -1,5 +1,6 @@
 import { Container } from "@/styles/SharedStyles";
 import styled from "styled-components";
+import Image from "next/image";
 
 export const ContainerPadStyled = styled.div`
   padding: 70px 87px;
@@ -37,5 +38,16 @@ export const ContainerDesc = styled.div`
   background-color: blue;
   @media (max-width: 767px) {
     padding: 20px 15px;
+  }
+`;
+export const ImageStyled = styled.div`
+  width: calc(100% / 6);
+  border: 2px solid white;
+  overflow: hidden;
+  margin-right: 5px;
+  img {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
   }
 `;

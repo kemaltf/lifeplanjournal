@@ -33,9 +33,7 @@ const Index = ({ images, currentImage, setCurrentImage, setDurationMs }: IndexPr
     setCurrentImage(index);
     const prevSlide = currentImage;
     const diffSlide = Math.abs(index - prevSlide);
-    console.log(diffSlide);
     const totalDuration = 200 + 200 * diffSlide;
-    console.log(totalDuration);
     setDurationMs(totalDuration);
   };
   /**
@@ -86,6 +84,10 @@ const Index = ({ images, currentImage, setCurrentImage, setDurationMs }: IndexPr
   const dragStart = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     prevClientX.current = e.clientX;
     setIsDragging(true);
+
+    // adding listener document
+    document.addEventListener("mousemove", dragging);
+    document.addEventListener("mouseup", dragStop);
     e.preventDefault();
   };
 
@@ -94,7 +96,7 @@ const Index = ({ images, currentImage, setCurrentImage, setDurationMs }: IndexPr
    * @param {MouseEvent} e
    */
   let diff: number;
-  const dragging = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+  const dragging = (e: any) => {
     if (!isDragging) return;
     diff = e.clientX - prevClientX.current;
     let translateXOnDrag = translateX;
@@ -110,8 +112,12 @@ const Index = ({ images, currentImage, setCurrentImage, setDurationMs }: IndexPr
    * Change slide based on the diff when mouse end click
    * @param {MouseEvent} e
    */
-  const dragStop = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+  const dragStop = (e: any) => {
     setIsDragging(false);
+    // removing listener document
+
+    document.removeEventListener("mousemove", dragging);
+    document.removeEventListener("mouseup", dragStop);
 
     let translateXOnDrag = translateX;
     containerRef.current!.style.transform = `translate3d(-${translateXOnDrag}px,0,0)`;
