@@ -1,24 +1,37 @@
 import Image from "next/image";
 import React, { useState, useRef, useEffect } from "react";
-import { ArrowButtonLeft, ArrowButtonRight, ContainerStyled, ImageCarousel, SlideContent, ArrowImageRight } from "./CarouselStyled";
+import { ArrowButtonLeft, ArrowButtonRight, ContainerStyled, SlideContent, ArrowImageRight } from "./CarouselStyled";
 
 type IndexProps = {
   images: string[];
   currentImage?: number;
   setCurrentImage?: (index: number) => void;
-  durationMs: number;
+  durationMs?: number;
   setDurationMs?: (index: number) => void;
-  loop: boolean;
-  arrow: boolean;
+  loop?: boolean;
+  arrow?: boolean;
   slide?: boolean;
   children: React.ReactNode;
 };
-const Index = ({ images, currentImage = 0, setCurrentImage, durationMs = 250, setDurationMs, arrow, loop, children, slide = true }: IndexProps): JSX.Element => {
+const Index = ({ images, currentImage = 0, setCurrentImage, durationMs = 250, setDurationMs, arrow = true, loop = false, slide = true, children }: IndexProps): JSX.Element => {
   //=== usefull function ===//
-  // screenWidth, containerWidth
   const containerRef = useRef<HTMLDivElement>(null); // reference the container
   const [screenWidth, setScreenWidth] = useState<number>(0); // screen width
   const [containerWidth, setContainerWidth] = useState<number>(0); // container width
+
+  /**
+   * Calculate screen width
+   */
+  const getScreenWidth = (): void => {
+    setScreenWidth(window.innerWidth);
+  };
+
+  /**
+   * Calculate container width
+   */
+  const getContainerWidth = (): void => {
+    setContainerWidth(containerRef.current!.offsetWidth);
+  };
 
   // === slideshow controller === //
   const [firstImageWidth, setFirstImageWidth] = useState(0);
@@ -29,41 +42,27 @@ const Index = ({ images, currentImage = 0, setCurrentImage, durationMs = 250, se
       setFirstImageWidth(firstImageRef.current.offsetWidth);
     }
   };
-
   // == end == //
+
   //=== slider function ===//
   const prevClientX = useRef<number>(0); // position when the first click
-  // const [currentSlide, setCurrentSlide] = useState<number>(0); // current slide state
   const [prevSlide, setPrevSlide] = useState<number>(0); // previous slide state
   const [translateX, setTranslateX] = useState<number>(0); // translate x number
   const [isDragging, setIsDragging] = useState<boolean>(false); // dragging state
 
-  // Update state di dalam SlideShow ketika currentImage berubah
-  // if (currentImage !== currentSlide) {
-  //   setCurrentSlide(currentImage);
-  // }
-
-  /**
-   * Calculate container width
-   */
-  const getContainerWidth = (): void => {
-    setContainerWidth(containerRef.current!.offsetWidth);
-  };
-
-  /**
-   * Calculate screen width
-   */
-  const getScreenWidth = (): void => {
-    setScreenWidth(window.innerWidth);
-  };
+  // == hero ==//
+  const [cloneClass, setCloneClass] = useState("");
+  // == hero end==//
 
   /**
    * Calculate screen width when mounting for the first time
    */
   useEffect((): (() => void) => {
     getScreenWidth();
+    getContainerWidth();
     const handleResize = (): void => {
       getScreenWidth();
+      getContainerWidth();
     };
     window.addEventListener("resize", handleResize); // call handleResize when window has changed
 
@@ -71,11 +70,8 @@ const Index = ({ images, currentImage = 0, setCurrentImage, durationMs = 250, se
       window.removeEventListener("resize", handleResize); // remove event listener when the component has unmounted
     };
   }, [screenWidth]);
-  useEffect(() => {
-    getContainerWidth();
-  }, [screenWidth]);
 
-  //== BUTTON SLIDER SETTING ==//
+  //== SLIDER FUNCTION ==//
   /**
    * Function to handle arrow click (not looping)
    *
@@ -83,26 +79,71 @@ const Index = ({ images, currentImage = 0, setCurrentImage, durationMs = 250, se
    */
   const handleArrowClick = (direction: "left" | "right") => {
     let newCurrentSlide = currentImage;
-    const maxSlide = images.length;
-    if (direction === "left") {
-      if (currentImage !== 0) {
+
+    const maxSlide = loop ? images.length + 2 : images.length;
+    if (loop) {
+      if (direction === "left") {
         newCurrentSlide = (currentImage - 1 + maxSlide) % maxSlide;
-        // setCurrentSlide(newCurrentSlide);
-        setCurrentImage(newCurrentSlide);
+        if (currentImage === 1) {
+          setCloneClass("clone");
+          newCurrentSlide = (currentImage - 2 + maxSlide) % maxSlide;
+          console.log(newCurrentSlide);
+          setTimeout(() => {
+            setCloneClass("");
+            newCurrentSlide = (currentImage - 3 + maxSlide) % maxSlide;
+            if (setCurrentImage) {
+              setCurrentImage(newCurrentSlide);
+            }
+            setTranslateX(newCurrentSlide * containerWidth);
+          }, 50);
+        }
+        if (setCurrentImage) {
+          setCurrentImage(newCurrentSlide);
+        }
         setTranslateX(newCurrentSlide * containerWidth);
-      } else {
-        let translateXOnDrag = translateX;
-        containerRef.current!.style.transform = `translate3d(${-translateXOnDrag}px,0,0)`;
+      } else if (direction === "right") {
+        if (currentImage === maxSlide - 1) {
+          setCloneClass("clone");
+          newCurrentSlide = (currentImage + 2) % maxSlide;
+          setTimeout(() => {
+            setCloneClass("");
+            newCurrentSlide = (currentImage + 3) % maxSlide;
+            if (setCurrentImage) {
+              setCurrentImage(newCurrentSlide);
+            }
+            setTranslateX(newCurrentSlide * containerWidth);
+          }, 50);
+        } else {
+          newCurrentSlide = (currentImage + 1) % maxSlide;
+        }
+        if (setCurrentImage) {
+          setCurrentImage(newCurrentSlide);
+        }
+        setTranslateX(newCurrentSlide * containerWidth);
       }
-    } else if (direction === "right") {
-      if (currentImage !== maxSlide - 1) {
-        newCurrentSlide = (currentImage + 1) % maxSlide;
-        // setCurrentSlide(newCurrentSlide);
-        setCurrentImage(newCurrentSlide);
-        setTranslateX(newCurrentSlide * containerWidth);
-      } else {
-        let translateXOnDrag = translateX;
-        containerRef.current!.style.transform = `translate3d(${-translateXOnDrag}px,0,0)`;
+    } else {
+      if (direction === "left") {
+        if (currentImage !== 0) {
+          newCurrentSlide = (currentImage - 1 + maxSlide) % maxSlide;
+          if (setCurrentImage) {
+            setCurrentImage(newCurrentSlide);
+          }
+          setTranslateX(newCurrentSlide * containerWidth);
+        } else {
+          let translateXOnDrag = translateX;
+          containerRef.current!.style.transform = `translate3d(${-translateXOnDrag}px,0,0)`;
+        }
+      } else if (direction === "right") {
+        if (currentImage !== maxSlide - 1) {
+          newCurrentSlide = (currentImage + 1) % maxSlide;
+          if (setCurrentImage) {
+            setCurrentImage(newCurrentSlide);
+          }
+          setTranslateX(newCurrentSlide * containerWidth);
+        } else {
+          let translateXOnDrag = translateX;
+          containerRef.current!.style.transform = `translate3d(${-translateXOnDrag}px,0,0)`;
+        }
       }
     }
   };
@@ -130,7 +171,6 @@ const Index = ({ images, currentImage = 0, setCurrentImage, durationMs = 250, se
   const dragStart = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     prevClientX.current = e.clientX;
     setIsDragging(true);
-    // document.addEventListener("mousedown", starting);
     document.addEventListener("mousemove", moving);
     document.addEventListener("mouseup", dragStop);
     e.preventDefault();
@@ -138,26 +178,12 @@ const Index = ({ images, currentImage = 0, setCurrentImage, durationMs = 250, se
 
   const moving = (e: any) => {
     diff = e.clientX - prevClientX.current;
-    console.log("diff", diff);
     let translateXOnDrag = translateX;
     translateXOnDrag -= diff;
     containerRef.current!.style.transform = `translate3d(${-translateXOnDrag}px,0,0)`;
     e.preventDefault();
   };
 
-  /**
-   * Get the difference position of axis X when mouse dragged on x axis
-   * @param {MouseEvent} e
-   */
-  const dragging = (e: any) => {
-    if (!isDragging) return;
-
-    diff = e.clientX - prevClientX.current;
-    let translateXOnDrag = translateX;
-    translateXOnDrag -= diff;
-    containerRef.current!.style.transform = `translate3d(${-translateXOnDrag}px,0,0)`;
-    e.preventDefault();
-  };
   /**
    * Change slide based on the diff when mouse end click
    * @param {MouseEvent} e
@@ -178,6 +204,7 @@ const Index = ({ images, currentImage = 0, setCurrentImage, durationMs = 250, se
     containerRef.current!.style.transform = `translate3d(${-translateXOnDrag}px,0,0)`;
     e.preventDefault();
   };
+
   //== TOUCH DRAG SETTING ==//
   /**
    * Get the first position of axis X when touch first time
@@ -197,9 +224,9 @@ const Index = ({ images, currentImage = 0, setCurrentImage, durationMs = 250, se
    */
   const touchHold = (e: any) => {
     if (!isDragging) return;
-    diffTouch = e.touches[0].clientX - prevClientX.current;
+    diff = e.touches[0].clientX - prevClientX.current;
     let translateXOnDrag = translateX;
-    translateXOnDrag -= diffTouch;
+    translateXOnDrag -= diff;
     containerRef.current!.style.transform = `translate3d(${-translateXOnDrag}px,0,0)`;
   };
   /**
@@ -210,13 +237,16 @@ const Index = ({ images, currentImage = 0, setCurrentImage, durationMs = 250, se
     setIsDragging(false);
     document.removeEventListener("touchmove", touchHold);
     document.removeEventListener("touchend", touchStop);
-    if (diffTouch < -50) {
-      handleArrowClick("right");
-    } else if (diffTouch > 50) {
-      handleArrowClick("left");
+    if (slide === true) {
+      if (diff < -50) {
+        handleArrowClick("right");
+      } else if (diff > 50) {
+        handleArrowClick("left");
+      }
     }
     let translateXOnDrag = translateX;
     containerRef.current!.style.transform = `translate3d(${-translateXOnDrag}px,0,0)`;
+    e.preventDefault();
   };
 
   return (
@@ -233,7 +263,16 @@ const Index = ({ images, currentImage = 0, setCurrentImage, durationMs = 250, se
             </ArrowButtonLeft>
           )
         ))}
-      <SlideContent className={`${isDragging ? "dragging" : ""} `} ref={containerRef} onMouseDown={dragStart} onMouseUp={dragStop} onTouchStart={touchStart} onTouchMove={touchHold} onTouchEnd={touchStop} durationMs={durationMs}>
+      <SlideContent
+        className={`${isDragging ? "dragging" : ""} ${loop ? (cloneClass ? "clone" : "") : ""}`}
+        ref={containerRef}
+        onMouseDown={dragStart}
+        onMouseUp={dragStop}
+        onTouchStart={touchStart}
+        onTouchMove={touchHold}
+        onTouchEnd={touchStop}
+        durationMs={durationMs}
+      >
         {children}
       </SlideContent>
 
