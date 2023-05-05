@@ -1,10 +1,8 @@
-import { ContainerPad } from "@/styles/SharedStyles";
-import React, { useState, useRef, useEffect } from "react";
-import { ContainerImage, ContainerBigImage, ContainerDesc, ContainerPadStyled, ImageStyled } from "./ImageSlideCarousel";
+import React, { useState } from "react";
+import { ContainerImage, ContainerBigImage, ContainerDesc, ContainerPadStyled, ImageStyled, LinkHover, Breadcrumb, ColaborationName, ProductTitle, ProductDesc, Price, Disc, PercentageDisc } from "./ProductSlideCarousel";
 import Image from "next/image";
 import Carousel from "../../molecules/Carousel";
-import SlideShowControl from "../../molecules/SlideShowControl";
-
+import InputDropdown from "../../atoms/InputDropdown";
 // Ceritanya gambarnya dari API, setelah API jadi kita replace
 const images: string[] = [
   "https://via.placeholder.com/210/00FF00?text=1",
@@ -14,6 +12,9 @@ const images: string[] = [
   "https://via.placeholder.com/220/000?text=5",
   "https://via.placeholder.com/210/00FF00?text=6",
 ];
+
+// option dari API
+const options = ["Option 1", "Option 2", "Option 3"];
 type Props = {};
 
 const index = (props: Props) => {
@@ -26,6 +27,12 @@ const index = (props: Props) => {
     const diffSlide = Math.abs(index - prevSlide);
     const totalDuration = 200 + 200 * diffSlide;
     setDurationMs(totalDuration);
+  };
+
+  const [selectedOption, setSelectedOption] = useState(options[0]);
+
+  const handleOptionChange = (option) => {
+    setSelectedOption(option);
   };
   return (
     <ContainerPadStyled>
@@ -48,11 +55,18 @@ const index = (props: Props) => {
       </ContainerImage>
 
       <ContainerDesc>
-        <p>Product category</p>
-        <h1>Product Title</h1>
-        <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Expedita molestiae ducimus perferendis rem. Illum excepturi aperiam possimus tempora sequi amet.</p>
-        <h3>Rp 20.000</h3>
-        <del>Rp 20.000</del>
+        <Breadcrumb>
+          <LinkHover>Product category</LinkHover>
+        </Breadcrumb>
+        <ProductTitle>Product Title</ProductTitle>
+        <ColaborationName>
+          <LinkHover>LIFEPLANJOURNAL X AMALIATIU</LinkHover>
+        </ColaborationName>
+        <ProductDesc>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Expedita molestiae ducimus perferendis rem. Illum excepturi aperiam possimus tempora sequi amet.</ProductDesc>
+        <Price>Rp 20.000</Price>
+        <Disc>Rp 20.000</Disc>
+        <PercentageDisc>UP TO 30 % OFF</PercentageDisc>
+        <InputDropdown label="Select an option" options={options} value={selectedOption} onChange={handleOptionChange}></InputDropdown>
       </ContainerDesc>
     </ContainerPadStyled>
   );

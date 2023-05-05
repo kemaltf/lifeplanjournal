@@ -22,6 +22,7 @@ const GlobalStyle = createGlobalStyle`
     --gog-bright-red: #FF5B5A;
     --gog-coral-pink: #FD8C83;
     --gog-crayola-yellow: #F9E08E;
+    --gog-gray:#879898;
   }
   html,
   body, input, button {
