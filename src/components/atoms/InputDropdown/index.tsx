@@ -42,15 +42,14 @@ const index = ({ label, options, value, onChange }: Props) => {
           {" "}
           {value}
         </DropdownToggle>
-        {isOpen && (
-          <DropdownMenu>
-            {options.map((option) => (
-              <DropdownOption key={option} onClick={() => handleOptionClick(option)}>
-                {option}
-              </DropdownOption>
-            ))}
-          </DropdownMenu>
-        )}
+
+        <DropdownMenu className={isOpen ? "open" : "hidden"}>
+          {options.map((option) => (
+            <DropdownOption key={option} onClick={() => handleOptionClick(option)}>
+              {option}
+            </DropdownOption>
+          ))}
+        </DropdownMenu>
       </DropdownContainer>
     </>
   );
