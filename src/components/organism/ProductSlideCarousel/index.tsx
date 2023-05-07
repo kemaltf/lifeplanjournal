@@ -1,8 +1,25 @@
 import React, { useState } from "react";
-import { ContainerImage, ContainerBigImage, ContainerDesc, ContainerPadStyled, ImageStyled, LinkHover, Breadcrumb, ColaborationName, ProductTitle, ProductDesc, Price, Disc, PercentageDisc } from "./ProductSlideCarousel";
+import {
+  ContainerImage,
+  ContainerBigImage,
+  ContainerDesc,
+  ContainerPadStyled,
+  ImageStyled,
+  LinkHover,
+  Breadcrumb,
+  ColaborationName,
+  ProductTitle,
+  ProductDesc,
+  Price,
+  Disc,
+  PercentageDisc,
+  Stock,
+  QuantityOrder,
+} from "./ProductSlideCarousel";
 import Image from "next/image";
 import Carousel from "../../molecules/Carousel";
 import InputDropdown from "../../atoms/InputDropdown";
+import InputNumber from "../../atoms/InputNumber";
 // Ceritanya gambarnya dari API, setelah API jadi kita replace
 const images: string[] = [
   "https://via.placeholder.com/210/00FF00?text=1",
@@ -67,6 +84,12 @@ const index = (props: Props) => {
         <Disc>Rp 20.000</Disc>
         <PercentageDisc>UP TO 30 % OFF</PercentageDisc>
         <InputDropdown label="Select an option" options={options} value={selectedOption} onChange={handleOptionChange}></InputDropdown>
+        <QuantityOrder>
+          <InputNumber initialValue={1} min={1} max={10} step={1}></InputNumber>{" "}
+          <Stock>
+            <span>Stock:</span> 1000
+          </Stock>
+        </QuantityOrder>
       </ContainerDesc>
     </ContainerPadStyled>
   );

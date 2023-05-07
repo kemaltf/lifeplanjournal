@@ -118,3 +118,17 @@ export const PercentageDisc = styled.p`
   display: inline-block;
   margin-left: 10px;
 `;
+
+export const Stock = styled.p`
+  display: inline-block;
+  margin-left: 10px;
+  span {
+    font-weight: 600;
+  }
+`;
+
+export const QuantityOrder = styled.div`
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+`;
