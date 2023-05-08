@@ -20,6 +20,7 @@ import Image from "next/image";
 import Carousel from "../../molecules/Carousel";
 import InputDropdown from "../../atoms/InputDropdown";
 import InputNumber from "../../atoms/InputNumber";
+import InputParagraph from "../../atoms/InputParagraph";
 // Ceritanya gambarnya dari API, setelah API jadi kita replace
 const images: string[] = [
   "https://via.placeholder.com/210/00FF00?text=1",
@@ -89,6 +90,9 @@ const index = (props: Props) => {
           <Stock>
             <span>Stock:</span> 1000
           </Stock>
+        </QuantityOrder>
+        <QuantityOrder>
+          <InputParagraph maxChar={100} height={100}></InputParagraph>
         </QuantityOrder>
       </ContainerDesc>
     </ContainerPadStyled>

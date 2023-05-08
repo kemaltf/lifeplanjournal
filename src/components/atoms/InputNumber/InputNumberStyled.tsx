@@ -1,12 +1,12 @@
 import styled from "styled-components";
 export const Container = styled.div`
-  position: relative;
   border-radius: 6px;
   overflow: hidden;
-  border: 1px solid var(--gog-gray);
   display: inline-block;
+  border: 1px solid var(--gog-gray);
+  padding: 3px;
   &.focus {
-    border: 2px solid var(--gog-pastel-teal-darker);
+    border: 1px solid var(--gog-pastel-teal-darker);
   }
 `;
 export const Input = styled.input`
@@ -17,6 +17,7 @@ export const Input = styled.input`
   z-index: 1;
   text-align: center;
   border: 0;
+  margin: 0 3px;
   &:focus {
     outline: 0;
     box-shadow: 0px;
@@ -41,7 +42,6 @@ export const Input = styled.input`
 
 export const Button = styled.div`
   display: inline-block;
-  height: 30px;
   padding: 0;
   margin: 0;
   border: 0px;
@@ -49,7 +49,8 @@ export const Button = styled.div`
   line-height: 30px;
   outline: 0;
   box-shadow: 0px;
-  width: 40px;
+  width: 24px;
+  height: 24px;
   font-size: 18px;
   cursor: pointer;
   user-select: none;
@@ -63,5 +64,9 @@ export const Button = styled.div`
 
   &.qty {
     cursor: default;
+  }
+
+  &:hover {
+    background-color: var(--gog-gray);
   }
 `;

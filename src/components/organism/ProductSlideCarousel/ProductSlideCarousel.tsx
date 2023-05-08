@@ -131,4 +131,6 @@ export const QuantityOrder = styled.div`
   margin-top: 10px;
   display: flex;
   align-items: center;
+  flex: 1;
+  width: 100%;
 `;
