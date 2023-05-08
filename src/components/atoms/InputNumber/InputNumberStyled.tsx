@@ -1,8 +1,9 @@
 import styled from "styled-components";
+
 export const Container = styled.div`
   border-radius: 6px;
   overflow: hidden;
-  display: inline-block;
+  display: flex;
   border: 1px solid var(--gog-gray);
   padding: 3px;
   &.focus {
@@ -41,12 +42,10 @@ export const Input = styled.input`
 `;
 
 export const Button = styled.div`
-  display: inline-block;
-  padding: 0;
-  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   border: 0px;
-  text-align: center;
-  line-height: 30px;
   outline: 0;
   box-shadow: 0px;
   width: 24px;

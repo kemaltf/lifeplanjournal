@@ -21,7 +21,7 @@ const Index = () => {
       <LogoContainer href="/">
         <Image src={LogoImage} alt="logo" width={27}></Image>
         <SiteTitle>
-          <h1>Life Plan Journal</h1>
+          <h1>Tes</h1>
         </SiteTitle>
       </LogoContainer>
       <Hamburger
