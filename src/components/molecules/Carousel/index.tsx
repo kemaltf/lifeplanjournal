@@ -1,9 +1,15 @@
 import Image from "next/image";
 import React, { useState, useRef, useEffect } from "react";
-import { ArrowButtonLeft, ArrowButtonRight, ContainerStyled, SlideContent, ArrowImageRight } from "./CarouselStyled";
+import {
+  ArrowButtonLeft,
+  ArrowButtonRight,
+  ContainerStyled,
+  SlideContent,
+  ArrowImageRight,
+} from "./CarouselStyled";
 
 type IndexProps = {
-  images: string[];
+  imagesLen: number;
   currentImage?: number;
   setCurrentImage?: (index: number) => void;
   durationMs?: number;
@@ -13,7 +19,17 @@ type IndexProps = {
   slide?: boolean;
   children: React.ReactNode;
 };
-const Index = ({ images, currentImage = 0, setCurrentImage, durationMs = 400, setDurationMs, arrow = true, loop = false, slide = true, children }: IndexProps): JSX.Element => {
+const Index = ({
+  imagesLen,
+  currentImage = 0,
+  setCurrentImage,
+  durationMs = 400,
+  setDurationMs,
+  arrow = true,
+  loop = false,
+  slide = true,
+  children,
+}: IndexProps): JSX.Element => {
   //=== usefull function ===//
   const containerRef = useRef<HTMLDivElement>(null); // reference the container
   const [screenWidth, setScreenWidth] = useState<number>(0); // screen width
@@ -80,7 +96,7 @@ const Index = ({ images, currentImage = 0, setCurrentImage, durationMs = 400, se
   const handleArrowClick = (direction: "left" | "right") => {
     let newCurrentSlide = currentImage;
 
-    const maxSlide = loop ? images.length + 2 : images.length;
+    const maxSlide = loop ? imagesLen + 2 : imagesLen;
     if (loop) {
       if (direction === "left") {
         newCurrentSlide = (currentImage - 1 + maxSlide) % maxSlide;
@@ -254,17 +270,31 @@ const Index = ({ images, currentImage = 0, setCurrentImage, durationMs = 400, se
       {arrow &&
         (loop ? (
           <ArrowButtonLeft>
-            <Image src="/icons/arrow.svg" width={40} height={40} alt="" onClick={() => handleArrowClick("left")} />
+            <Image
+              src="/icons/arrow.svg"
+              width={40}
+              height={40}
+              alt=""
+              onClick={() => handleArrowClick("left")}
+            />
           </ArrowButtonLeft>
         ) : (
           currentImage !== 0 && (
             <ArrowButtonLeft>
-              <Image src="/icons/arrow.svg" width={40} height={40} alt="" onClick={() => handleArrowClick("left")} />
+              <Image
+                src="/icons/arrow.svg"
+                width={40}
+                height={40}
+                alt=""
+                onClick={() => handleArrowClick("left")}
+              />
             </ArrowButtonLeft>
           )
         ))}
       <SlideContent
-        className={`${isDragging ? "dragging" : ""} ${loop ? (cloneClass ? "clone" : "") : ""}`}
+        className={`${isDragging ? "dragging" : ""} ${
+          loop ? (cloneClass ? "clone" : "") : ""
+        }`}
         ref={containerRef}
         onMouseDown={dragStart}
         onMouseUp={dragStop}
@@ -279,12 +309,24 @@ const Index = ({ images, currentImage = 0, setCurrentImage, durationMs = 400, se
       {arrow &&
         (loop ? (
           <ArrowButtonRight>
-            <ArrowImageRight src="/icons/arrow.svg" width={40} height={40} alt="" onClick={() => handleArrowClick("right")} />
+            <ArrowImageRight
+              src="/icons/arrow.svg"
+              width={40}
+              height={40}
+              alt=""
+              onClick={() => handleArrowClick("right")}
+            />
           </ArrowButtonRight>
         ) : (
-          currentImage !== images.length - 1 && (
+          currentImage !== imagesLen - 1 && (
             <ArrowButtonRight>
-              <ArrowImageRight src="/icons/arrow.svg" width={40} height={40} alt="" onClick={() => handleArrowClick("right")} />
+              <ArrowImageRight
+                src="/icons/arrow.svg"
+                width={40}
+                height={40}
+                alt=""
+                onClick={() => handleArrowClick("right")}
+              />
             </ArrowButtonRight>
           )
         ))}
