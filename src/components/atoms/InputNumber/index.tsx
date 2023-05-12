@@ -44,11 +44,24 @@ const index = ({ initialValue, min, max, step = 1 }: props) => {
   }, [isFocus]);
   return (
     <Container className={isFocus ? "focus" : ""}>
-      <Button className={`qty ${value <= min ? "disabled" : ""} $`} onClick={handleDecrease}>
+      <Button
+        className={`${value <= min ? "qty disabled" : ""} $`}
+        onClick={handleDecrease}
+      >
         -
       </Button>{" "}
-      <Input type="number" value={value} min={min} max={max} step={step} onClick={handleFocus} />
-      <Button className={value >= max ? "qty disabled" : ""} onClick={handleIncrease}>
+      <Input
+        type="number"
+        value={value}
+        min={min}
+        max={max}
+        step={step}
+        onClick={handleFocus}
+      />
+      <Button
+        className={value >= max ? "qty disabled" : ""}
+        onClick={handleIncrease}
+      >
         +
       </Button>
     </Container>
