@@ -1,12 +1,19 @@
 import React, { useState, useEffect } from "react";
-import { DropdownContainer, DropdownToggle, DropdownMenu, DropdownOption, LabelInput } from "./InputDropdownStyled";
+import {
+  DropdownContainer,
+  DropdownToggle,
+  DropdownMenu,
+  DropdownOption,
+  LabelInput,
+} from "./InputDropdownStyled";
 type Props = {
   label: string;
   options: string[];
   value: string;
   onChange: (option: string) => void;
+  margin: string;
 };
-const index = ({ label, options, value, onChange }: Props) => {
+const index = ({ label, options, value, margin, onChange }: Props) => {
   const [isOpen, setIsOpen] = useState(false);
   const [listenerAdded, setListenerAdded] = useState(false);
   const handleOptionClick = (option: string) => {
@@ -34,18 +41,24 @@ const index = ({ label, options, value, onChange }: Props) => {
 
   return (
     <>
-      <LabelInput onClick={() => setIsOpen(!isOpen)}>
+      <LabelInput onClick={() => setIsOpen(!isOpen)} margin={margin}>
         <label>{label}</label>
       </LabelInput>
       <DropdownContainer>
-        <DropdownToggle className={isOpen ? "open" : ""} onClick={() => setIsOpen(!isOpen)}>
+        <DropdownToggle
+          className={isOpen ? "open" : ""}
+          onClick={() => setIsOpen(!isOpen)}
+        >
           {" "}
           {value}
         </DropdownToggle>
 
         <DropdownMenu className={isOpen ? "open" : "hidden"}>
           {options.map((option) => (
-            <DropdownOption key={option} onClick={() => handleOptionClick(option)}>
+            <DropdownOption
+              key={option}
+              onClick={() => handleOptionClick(option)}
+            >
               {option}
             </DropdownOption>
           ))}

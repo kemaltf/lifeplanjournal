@@ -1,8 +1,9 @@
 import { Container } from "@/styles/SharedStyles";
 import styled from "styled-components";
-
+interface LabelInputProps {
+  margin: string;
+}
 export const DropdownContainer = styled.div`
-  margin: 0px 0px;
   position: relative;
 `;
 export const DropdownToggle = styled.div`
@@ -68,7 +69,8 @@ export const DropdownOption = styled.div`
   }
 `;
 
-export const LabelInput = styled.div`
+export const LabelInput = styled.div<LabelInputProps>`
+  margin: ${(props) => (props.margin ? props.margin : 0)};
   label {
     font-weight: 400;
     font-size: 15px;
