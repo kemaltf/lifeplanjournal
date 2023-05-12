@@ -29,4 +29,15 @@ export const ContainerBgPad = styled(ContainerBg)<ContainerBgProps>`
 `;
 export const ContainerPadCol = styled(ContainerPad)`
   flex-direction: column;
+  @media (min-width: 768px) and (max-width: 1023px) {
+    max-width: 100%;
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  @media (max-width: 767px) {
+    max-width: 100%;
+    padding-left: 0;
+    padding-right: 0;
+  }
 `;

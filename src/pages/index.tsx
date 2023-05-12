@@ -1,6 +1,5 @@
 import CollectionCard from "../components/organism/CollectionCard";
 import Head from "next/head";
-import BannerHomePage from "../components/molecules/BannerHomePage";
 import Hero from "../components/molecules/Hero";
 const images: string[] = [
   "https://via.placeholder.com/210/00FF00?text=1",
