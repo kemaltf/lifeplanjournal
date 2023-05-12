@@ -91,25 +91,7 @@ export const InputStyled = styled.input`
     border-color: var(--gog-primary);
   }
 `;
-export const ButtonStyled = styled.button`
-  border-radius: 0 4px 4px 0;
-  color: white;
-  background-color: var(--gog-primary);
-  border-color: var(--gog-primary);
-  border: 1px solid transparent;
-  padding: 5px 12px;
-  text-align: center;
-  white-space: nowrap;
-  font-size: 14px;
-  height: 34px;
 
-  &:hover {
-    color: white;
-    background-color: var(--gog-primary-dark-2);
-    border-color: var(--gog-primary-dark-1);
-    transition: all 0.2s ease-in-out;
-  }
-`;
 export const ContainerColStyled = styled(ContainerCol)`
   justify-content: start;
   gap: 10px;

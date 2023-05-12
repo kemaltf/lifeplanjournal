@@ -6,7 +6,6 @@ import {
   FooterInnerContainer,
   SocialMediaIcon,
   InputStyled,
-  ButtonStyled,
   ContainerColStyled,
   Icon,
   FooterMark,
@@ -14,6 +13,7 @@ import {
 import Link from "next/link";
 import { FaInstagram, FaTiktok, FaYoutube } from "react-icons/fa";
 import { SiShopee } from "react-icons/si";
+import { ButtonInputNoSpace } from "@/components/atoms/Button/ButtonStyled";
 
 type Props = {};
 
@@ -97,7 +97,7 @@ const index = (props: Props) => {
               </div>
               <form>
                 <InputStyled type="text"></InputStyled>
-                <ButtonStyled type="submit">Submit</ButtonStyled>
+                <ButtonInputNoSpace type="submit">Submit</ButtonInputNoSpace>
               </form>
               <div>
                 <p>
