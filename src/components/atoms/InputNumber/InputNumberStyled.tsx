@@ -6,6 +6,8 @@ export const Container = styled.div`
   display: flex;
   border: 1px solid var(--gog-gray);
   padding: 3px;
+  align-items: center;
+  justify-content: space-between;
   &.focus {
     border: 1px solid var(--gog-pastel-teal-darker);
   }
@@ -46,10 +48,11 @@ export const Button = styled.div`
   justify-content: center;
   align-items: center;
   border: 0px;
+  border-radius: 5px;
   outline: 0;
   box-shadow: 0px;
-  width: 24px;
-  height: 24px;
+  width: 20px;
+  height: 20px;
   font-size: 18px;
   cursor: pointer;
   user-select: none;
@@ -66,6 +69,6 @@ export const Button = styled.div`
   }
 
   &:hover {
-    background-color: var(--gog-gray);
+    background-color: #d0d0d0;
   }
 `;
