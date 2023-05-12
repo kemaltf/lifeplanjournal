@@ -18,6 +18,21 @@ export const ContainerPadStyled = styled.div`
   }
 `;
 
+export const ContainerPadStyledNoTopPad = styled.div`
+  padding: 0px 87px;
+  background: white;
+  display: flex;
+  @media (min-width: 768px) and (max-width: 1023px) {
+    padding: 70px 20px;
+  }
+
+  @media (max-width: 767px) {
+    display: flex;
+    flex-direction: column;
+    padding: 0px;
+  }
+`;
+
 export const ContainerImage = styled(Container)`
   overflow: hidden;
   /* background-color: red; */
@@ -34,6 +49,9 @@ export const ContainerBigImage = styled(Container)`
 export const ContainerDesc = styled.div`
   /* flex-direction: column;
   flex: 1; */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   background-color: white;
   padding: 40px 40px;
   @media (max-width: 767px) {
@@ -121,16 +139,49 @@ export const PercentageDisc = styled.p`
 
 export const Stock = styled.p`
   display: inline-block;
-  margin-left: 10px;
+  font-size: 12px;
   span {
     font-weight: 600;
   }
 `;
 
-export const QuantityOrder = styled.div`
-  margin-top: 10px;
+export const OrderSection = styled.div`
+  margin-top: 40px;
   display: flex;
-  align-items: center;
+  align-items: start;
   flex: 1;
   width: 100%;
+`;
+
+export const QuantityOrder = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+export const NotesContainer = styled.div`
+  margin-top: 20px;
+`;
+export const DiscountSection = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
+export const ImageSection = styled.div`
+  display: flex;
+  position: relative;
+  aspect-ratio: 4 / 3;
+  width: 50%;
+`;
+
+export const TextSection = styled.div`
+  display: flex;
+  width: 50%;
+  flex-direction: column;
+  justify-content: center;
+  align-content: center;
+  text-align: center;
+  padding: 20px;
+`;
+
+export const TextSectionTwo = styled(TextSection)`
+  text-align: start;
 `;
