@@ -27,3 +27,6 @@ export const ContainerBg = styled(Container)<ContainerBgProps>`
 export const ContainerBgPad = styled(ContainerBg)<ContainerBgProps>`
   padding: 0 87px;
 `;
+export const ContainerPadCol = styled(ContainerPad)`
+  flex-direction: column;
+`;
