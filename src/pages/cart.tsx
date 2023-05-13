@@ -2,7 +2,7 @@ import React from "react";
 import ProductCart from "@/components/organism/ProductCart";
 type Props = {};
 
-const Checkout = (props: Props) => {
+const cart = (props: Props) => {
   return (
     <div style={{ paddingBottom: "25vh" }}>
       <ProductCart></ProductCart>
@@ -10,4 +10,4 @@ const Checkout = (props: Props) => {
   );
 };
 
-export default Checkout;
+export default cart;

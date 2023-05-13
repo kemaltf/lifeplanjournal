@@ -30,10 +30,7 @@ import InputNumber from "../../atoms/InputNumber";
 import InputParagraph from "../../atoms/InputParagraph";
 import { BsEnvelopePaper, BsEnvelope } from "react-icons/bs";
 
-import {
-  ButtonNoBox,
-  ButtonNormal,
-} from "@/components/atoms/Button/ButtonStyled";
+import { ButtonNoBox, ButtonNormal } from "@/components/atoms/Button/ButtonStyled";
 // Ceritanya gambarnya dari API, setelah API jadi kita replace
 const images: string[] = [
   "https://via.placeholder.com/210/00FF00?text=1",
@@ -74,39 +71,15 @@ const index = (props: Props) => {
       <ContainerPadStyled>
         <ContainerImage>
           <ContainerBigImage>
-            <Carousel
-              imagesLen={images.length}
-              currentImage={currentImage}
-              setCurrentImage={setCurrentImage}
-              durationMs={durationMs}
-              loop={false}
-              arrow
-            >
+            <Carousel imagesLen={images.length} currentImage={currentImage} setCurrentImage={setCurrentImage} durationMs={durationMs} loop={false} arrow>
               {images.map((image: string, index) => (
-                <Image
-                  src={image}
-                  key={index}
-                  alt=""
-                  width={500}
-                  height={500}
-                  layout="responsive"
-                ></Image>
+                <Image src={image} key={index} alt="" width={500} height={500} layout="responsive"></Image>
               ))}
             </Carousel>
           </ContainerBigImage>
-          <Carousel
-            imagesLen={images.length}
-            durationMs={durationMs}
-            loop={false}
-            arrow={false}
-            slide={false}
-          >
+          <Carousel imagesLen={images.length} durationMs={durationMs} loop={false} arrow={false} slide={false}>
             {images.map((image: string, index) => (
-              <ImageStyled
-                key={index}
-                onClick={() => handleImageClick(index)}
-                onTouchStart={() => handleImageClick(index)}
-              >
+              <ImageStyled key={index} onClick={() => handleImageClick(index)} onTouchStart={() => handleImageClick(index)}>
                 <img src={image} alt="" />
               </ImageStyled>
             ))}
@@ -121,23 +94,13 @@ const index = (props: Props) => {
           <ColaborationName>
             <LinkHover>LIFEPLANJOURNAL X AMALIATIU</LinkHover>
           </ColaborationName>
-          <ProductDesc>
-            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Expedita
-            molestiae ducimus perferendis rem. Illum excepturi aperiam possimus
-            tempora sequi amet.
-          </ProductDesc>
+          <ProductDesc>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Expedita molestiae ducimus perferendis rem. Illum excepturi aperiam possimus tempora sequi amet.</ProductDesc>
           <Price>Rp 20.000</Price>
           <DiscountSection>
             <Disc>Rp 20.000</Disc>
             <PercentageDisc>UP TO 30 % OFF</PercentageDisc>
           </DiscountSection>
-          <InputDropdown
-            label="Select an option"
-            options={options}
-            value={selectedOption}
-            onChange={handleOptionChange}
-            margin="20px 0 5px 0"
-          ></InputDropdown>
+          <InputDropdown label="Select an option" options={options} value={selectedOption} onChange={handleOptionChange} margin="20px 0 5px 0"></InputDropdown>
 
           <NotesContainer>
             <ButtonNoBox onClick={handleNotesToggle}>
@@ -152,12 +115,7 @@ const index = (props: Props) => {
           )}
           <OrderSection>
             <QuantityOrder>
-              <InputNumber
-                initialValue={1}
-                min={1}
-                max={10}
-                step={1}
-              ></InputNumber>{" "}
+              <InputNumber initialValue={1} min={1} max={10} step={1}></InputNumber>{" "}
               <Stock>
                 <span>Stock:</span> 1000
               </Stock>
@@ -168,51 +126,24 @@ const index = (props: Props) => {
       </ContainerPadStyled>
       <ContainerPadStyledNoTopPad>
         <ImageSection>
-          <Image
-            alt="Sample 1"
-            src="/images/sample-images-1.webp"
-            fill
-            style={{ objectFit: "cover" }}
-          ></Image>
+          <Image alt="Sample 1" src="/images/sample-images-1.webp" fill style={{ objectFit: "cover" }}></Image>
         </ImageSection>
         <TextSection>
           <h1>Lorem ipsum dolor sit amet.</h1>
-          <p>
-            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Maxime,
-            iste laudantium architecto facere eaque recusandae vel rerum debitis
-            aperiam esse!
-          </p>
+          <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Maxime, iste laudantium architecto facere eaque recusandae vel rerum debitis aperiam esse!</p>
         </TextSection>
       </ContainerPadStyledNoTopPad>
       <ContainerPadStyledNoTopPad>
         <ImageSection>
-          <Carousel
-            imagesLen={images.length}
-            currentImage={currentImage}
-            setCurrentImage={setCurrentImage}
-            durationMs={durationMs}
-            loop={false}
-            arrow
-          >
+          <Carousel imagesLen={images.length} currentImage={currentImage} setCurrentImage={setCurrentImage} durationMs={durationMs} loop={false} arrow>
             {images.map((image: string, index) => (
-              <Image
-                src={image}
-                key={index}
-                alt=""
-                width={500}
-                height={500}
-                layout="responsive"
-              ></Image>
+              <Image src={image} key={index} alt="" width={500} height={500} layout="responsive"></Image>
             ))}
           </Carousel>
         </ImageSection>
         <TextSectionTwo>
           <h1>Lorem ipsum dolor sit amet.</h1>
-          <p>
-            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Maxime,
-            iste laudantium architecto facere eaque recusandae vel rerum debitis
-            aperiam esse!
-          </p>
+          <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Maxime, iste laudantium architecto facere eaque recusandae vel rerum debitis aperiam esse!</p>
         </TextSectionTwo>
       </ContainerPadStyledNoTopPad>
     </>
