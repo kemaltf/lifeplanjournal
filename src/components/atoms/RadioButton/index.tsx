@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useRef, useState } from "react";
+import { RadioContainer, RadioInput, RadioLabel } from "./RadioButtonStyled";
 
 type Props = {
   label?: string;
@@ -6,17 +7,18 @@ type Props = {
   value: string;
 };
 
-const index = ({ label, name, value }: Props) => {
+const index = ({ id, value, name, checked, onChange, label, ...rest }) => {
+  const radioRef = useRef(null);
+
+  const handleClick = () => {
+    radioRef.current.click();
+  };
+
   return (
-    <>
-      {label && <label htmlFor={label}>{label}</label>}
-      <input
-        type="radio"
-        id={label ? label : ""}
-        name={name}
-        value={values}
-      ></input>
-    </>
+    <RadioContainer onClick={handleClick} checked={checked} {...rest}>
+      <RadioInput ref={radioRef} type="radio" id={id} value={value} name={name} checked={checked} onChange={onChange} />
+      <RadioLabel htmlFor={id}>{label}</RadioLabel>
+    </RadioContainer>
   );
 };
 
