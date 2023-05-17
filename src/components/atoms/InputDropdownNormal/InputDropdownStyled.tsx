@@ -7,19 +7,20 @@ export const DropdownContainer = styled.div`
   position: relative;
 `;
 export const DropdownToggle = styled.div`
-  color: #000000;
+  color: var(--gog-gray);
   background-color: #ffffff;
-  font-size: 17px;
-  padding: 10px 20px;
-  border-bottom: 2px solid var(--gog-pastel-teal-darker);
-  /* box-shadow: 0px 0px 4px -2px rgba(0, 0, 0, 0.5); */
-  border-radius: 0px;
-  font-weight: 600;
+  padding: 10px;
+  border-radius: 5px;
   cursor: pointer;
   position: relative;
   transition: all ease-in-out 0.3s;
   width: 100%;
-
+  border: 1px solid var(--gog-gray);
+  font-size: 14px;
+  &.focus {
+    border: 1px solid var(--gog-pastel-teal-darker);
+    outline: 1px solid var(--gog-pastel-teal-darker);
+  }
   &:after {
     content: "";
     position: absolute;
@@ -33,7 +34,6 @@ export const DropdownToggle = styled.div`
     transform: rotate(45deg);
     transition: transform 0.2s ease-in-out;
   }
-
   &.open:after {
     transform: translateY(-30%) rotate(225deg);
   }
@@ -47,7 +47,6 @@ export const DropdownMenu = styled.div`
   border-radius: 5px;
   border: 1px solid var(--gog-pastel-teal-darker);
   opacity: 0;
-  /* box-shadow: 0px 0px 4px -2px rgba(0, 0, 0, 0.5); */
   margin-top: 8px;
   z-index: 10;
   transform: translateY(-10px);
@@ -62,9 +61,9 @@ export const DropdownMenu = styled.div`
 `;
 export const DropdownOption = styled.div`
   cursor: pointer;
-  padding: 0.5rem;
-  font-size: 1rem;
-  /* border: 1px solid var(--gog-pastel-teal-darker); */
+  margin-left: 0.5rem;
+  padding: 0.3rem 0;
+  font-size: 14px;
   border-bottom: 1px solid lightgray;
   &:hover {
     background-color: lightgray;
