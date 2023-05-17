@@ -4,8 +4,10 @@ import { ContainerCol } from "@/styles/SharedStyles";
 type props = {
   maxChar: number;
   height: number;
+  [key: string]: any;
 };
-const index = ({ maxChar, height }: props) => {
+
+const index = ({ maxChar, height, ...rest }: props) => {
   const [text, setText] = useState("");
   const [isFocus, setIsFocus] = useState(false);
 
@@ -38,7 +40,7 @@ const index = ({ maxChar, height }: props) => {
   }, [isFocus]);
   return (
     <ContainerCol>
-      <InputParagraph className={isFocus ? "focus" : ""} placeholder="Example: Please write a letter for my friend" value={text} onChange={handleInput} height={height} onClick={handleFocus} />
+      <InputParagraph className={isFocus ? "focus" : ""} placeholder="Example: Please write a letter for my friend" value={text} onChange={handleInput} height={height} onClick={handleFocus} {...rest} />
       <TextLength>
         {text.length}/{maxChar} characters
       </TextLength>
