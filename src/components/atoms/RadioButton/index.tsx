@@ -7,7 +7,7 @@ type Props = {
   value: string;
 };
 
-const index = ({ id, value, name, checked, onChange, label, ...rest }) => {
+const index = ({ id, value, name, checked, onChange, children, ...rest }) => {
   const radioRef = useRef(null);
 
   const handleClick = () => {
@@ -15,9 +15,17 @@ const index = ({ id, value, name, checked, onChange, label, ...rest }) => {
   };
 
   return (
-    <RadioContainer onClick={handleClick} checked={checked} {...rest}>
-      <RadioInput ref={radioRef} type="radio" id={id} value={value} name={name} checked={checked} onChange={onChange} />
-      <RadioLabel htmlFor={id}>{label}</RadioLabel>
+    <RadioContainer onMouseDown={handleClick} checked={checked} {...rest}>
+      <RadioInput
+        ref={radioRef}
+        type="radio"
+        id={id}
+        value={value}
+        name={name}
+        checked={checked}
+        onChange={onChange}
+      />
+      <RadioLabel htmlFor={id}>{children}</RadioLabel>
     </RadioContainer>
   );
 };
