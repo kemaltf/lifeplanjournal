@@ -1,17 +1,21 @@
 import styled from "styled-components";
 
 export const InnerContainer = styled.div`
-  width: 60%;
-  background-color: #edf6f4;
-  padding: 50px 87px;
-  gap: 10px;
   display: flex;
-  flex-direction: column;
 `;
-
+export const InputContainer = styled.div`
+  padding: 50px 70px 50px 400px;
+  gap: 10px;
+  flex-direction: column;
+  display: flex;
+  align-items: start;
+  width: 55%;
+  background-color: #edf6f4;
+`;
 export const GroupInput = styled.div`
   display: flex;
   gap: 5px;
+  width: 100%;
 `;
 
 export const Gender = styled.div`
@@ -24,6 +28,8 @@ export const Gender = styled.div`
   position: relative;
   /* width: 50%; */
   /* gap: 5px; */
+  width: 100%;
+
   &.focus {
     border: 1px solid var(--gog-pastel-teal-darker);
     outline: 1px solid var(--gog-pastel-teal-darker);
@@ -36,6 +42,7 @@ export const LabelStyled = styled.label`
   top: -7%;
   left: 10px;
   transform: ${(props) => (props.hasValue ? "translateY(55%)" : "none")};
-  color: ${(props) => (props.hasValue ? "var(--gog-pastel-teal-darker)" : "#333")};
+  color: ${(props) =>
+    props.hasValue ? "var(--gog-pastel-teal-darker)" : "#333"};
   transition: all 0.3s ease-out;
 `;
