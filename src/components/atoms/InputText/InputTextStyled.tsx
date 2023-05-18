@@ -2,6 +2,7 @@ import styled from "styled-components";
 export const InputWrapper = styled.div`
   position: relative;
   flex: 1;
+  width: 100%;
 `;
 export const InputStyled = styled.input`
   width: 100%;
@@ -25,6 +26,7 @@ export const LabelStyled = styled.label`
   top: ${(props) => (props.hasValue ? "0" : "31%")};
   left: 10px;
   transform: ${(props) => (props.hasValue ? "translateY(55%)" : "none")};
-  color: ${(props) => (props.hasValue ? "var(--gog-pastel-teal-darker)" : "#333")};
+  color: ${(props) =>
+    props.hasValue ? "var(--gog-pastel-teal-darker)" : "#333"};
   transition: all 0.3s ease-out;
 `;
