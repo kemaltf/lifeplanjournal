@@ -6,10 +6,28 @@ export const SelectContainer = styled.div`
   overflow-y: visible;
   width: 100%;
   flex: 1;
+
+  &:after {
+    content: "";
+    position: absolute;
+    top: 40%;
+    right: 10px;
+    transform: translateY(-50%);
+    border: solid var(--gog-gray);
+    border-width: 0 2px 2px 0;
+    display: inline-block;
+    padding: 3px;
+    transform: rotate(45deg);
+    transition: transform 0.2s ease-in-out;
+  }
+  &.open:after {
+    transform: translateY(-0%) rotate(225deg);
+  }
 `;
 
 export const SelectStyled = styled.select`
-  padding: ${(props) => (props.value ? "20px 10px 10px 10px" : "20px 10px 10px 10px")};
+  padding: ${(props) =>
+    props.value ? "20px 10px 10px 10px" : "20px 10px 10px 10px"};
   border: 1px solid var(--gog-gray);
   border-radius: 5px;
   font-size: 13px;
@@ -27,7 +45,8 @@ export const Label = styled.label`
   top: ${(props) => (props.focused || props.value ? "15%" : "31%")};
   left: 10px;
   font-size: ${(props) => (props.focused || props.value ? "10px" : "13px")};
-  color: ${(props) => (props.focused || props.value ? "(--gog-pastel-teal-darker)" : "#333")};
+  color: ${(props) =>
+    props.focused || props.value ? "(--gog-pastel-teal-darker)" : "#333"};
   transition: all 0.3s ease-out;
 `;
 

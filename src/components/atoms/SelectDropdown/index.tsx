@@ -1,5 +1,11 @@
 import React, { useState } from "react";
-import { SelectContainer, Label, SelectStyled, Option, OptionsContainer } from "./SelectDropdownStyled";
+import {
+  SelectContainer,
+  Label,
+  SelectStyled,
+  Option,
+  OptionsContainer,
+} from "./SelectDropdownStyled";
 type Props = {
   label: string;
   options: Array<{ value: string; label: string }>;
@@ -7,9 +13,8 @@ type Props = {
 const Select = ({ label, options }: Props) => {
   const [value, setValue] = useState("");
   const [focused, setFocused] = useState(false);
-
   const handleFocus = () => {
-    setFocused(true);
+    setFocused((prevFocused) => !prevFocused);
   };
 
   const handleBlur = () => {
@@ -17,15 +22,24 @@ const Select = ({ label, options }: Props) => {
   };
 
   const handleChange = (event) => {
+    setFocused(false);
     setValue(event.target.value);
   };
+  console.log(focused);
 
   return (
-    <SelectContainer>
+    <SelectContainer className={focused ? "open" : ""}>
       <Label htmlFor="select" focused={focused} value={value}>
         {label}
       </Label>
-      <SelectStyled id="select" value={value} onChange={handleChange} onFocus={handleFocus} onBlur={handleBlur}>
+      <SelectStyled
+        id="select"
+        value={value}
+        onChange={handleChange}
+        // onFocus={handleFocus}
+        onBlur={handleBlur}
+        onMouseDown={handleFocus}
+      >
         {options.map((option) => (
           <Option key={option.value} value={option.value}>
             {!focused && value == "" ? "" : option.label}
