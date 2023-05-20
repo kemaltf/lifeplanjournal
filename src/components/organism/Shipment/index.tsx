@@ -12,7 +12,7 @@ import RadioButton from "@/components/atoms/RadioButton";
 import Select from "@/components/atoms/SelectDropdown";
 import { ImWoman } from "react-icons/im";
 import { FaMale } from "react-icons/fa";
-
+import Checkbox from "@/components/atoms/InputCheckbox";
 type Props = {};
 
 const options = [
@@ -34,9 +34,15 @@ const options = [
 
 const index = (props: Props) => {
   const [selectedValue, setSelectedValue] = useState("");
+  const [checkboxSelected, setcheckboxSelected] = useState("");
 
   const handleRadioChange = (event) => {
     setSelectedValue(event.target.value);
+  };
+
+  const handleCheckboxChange = (event) => {
+    console.log(event);
+    // setcheckboxSelected(event);
   };
   return (
     <InnerContainer>
@@ -181,6 +187,18 @@ const index = (props: Props) => {
           placeholder="note to courier"
         ></InputParagraph>
       </InputContainer>
+      <div>
+        <Checkbox
+          label="Option 1"
+          checked={checkboxSelected === "Option 1"}
+          onMouseDown={handleCheckboxChange}
+        ></Checkbox>
+        <Checkbox
+          label="Option 2"
+          checked={checkboxSelected === "Option 2"}
+          onMouseDown={handleCheckboxChange}
+        ></Checkbox>
+      </div>
     </InnerContainer>
   );
 };
