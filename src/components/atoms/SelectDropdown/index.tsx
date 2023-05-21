@@ -1,11 +1,5 @@
 import React, { useState } from "react";
-import {
-  SelectContainer,
-  Label,
-  SelectStyled,
-  Option,
-  OptionsContainer,
-} from "./SelectDropdownStyled";
+import { SelectContainer, Label, SelectStyled, Option, OptionsContainer } from "./SelectDropdownStyled";
 type Props = {
   label: string;
   options: Array<{ value: string; label: string }>;
@@ -25,7 +19,6 @@ const Select = ({ label, options }: Props) => {
     setFocused(false);
     setValue(event.target.value);
   };
-  console.log(focused);
 
   return (
     <SelectContainer className={focused ? "open" : ""}>
