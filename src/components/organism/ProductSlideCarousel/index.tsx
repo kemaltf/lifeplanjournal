@@ -50,7 +50,6 @@ const index = (props: Props) => {
   const [durationMs, setDurationMs] = useState<number>(400); // container width
   const [isNotesActive, setisNotesActive] = useState<boolean>(false); // container width
   const handleImageClick = (index: number) => {
-    console.log(index);
     setCurrentImage(index);
     const prevSlide = currentImage;
     const diffSlide = Math.abs(index - prevSlide);
