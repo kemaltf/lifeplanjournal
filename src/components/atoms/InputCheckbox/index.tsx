@@ -1,31 +1,15 @@
-import React, { useState } from "react";
-import styled from "styled-components";
-import {
-  CheckboxContainer,
-  CheckboxInput,
-  CheckboxIcon,
-  CheckboxLabel,
-} from "./InputCheckboxStyled";
+import React from "react";
+import { CheckboxContainer, CheckboxInput, CheckboxIcon, CheckboxLabel } from "./InputCheckboxStyled";
 type Props = {};
 
-const index = ({ label, checked, onChange }: Props) => {
-  const [isChecked, setIsChecked] = useState(checked);
-  const handleCheckboxChange = (e) => {
-    const newValue = e.target.checked;
-    setIsChecked(newValue);
-    if (onChange) {
-      onChange(newValue);
-    }
-  };
+const index = ({ id, name, label, checked, onChange }: Props) => {
   return (
     <CheckboxContainer>
-      <CheckboxInput
-        type="checkbox"
-        checked={isChecked}
-        onChange={handleCheckboxChange}
-      />
-      <CheckboxIcon checked={isChecked}></CheckboxIcon>
-      <CheckboxLabel checked={isChecked}>{label}</CheckboxLabel>
+      <CheckboxInput type="checkbox" id={id} name={name} checked={checked} onChange={onChange} />
+      <CheckboxIcon checked={checked}></CheckboxIcon>
+      <CheckboxLabel for={id} checked={checked}>
+        {label}
+      </CheckboxLabel>
     </CheckboxContainer>
   );
 };
