@@ -103,7 +103,6 @@ const Index = ({
         if (currentImage === 1) {
           setCloneClass("clone");
           newCurrentSlide = (currentImage - 2 + maxSlide) % maxSlide;
-          console.log(newCurrentSlide);
           setTimeout(() => {
             setCloneClass("");
             newCurrentSlide = (currentImage - 3 + maxSlide) % maxSlide;
