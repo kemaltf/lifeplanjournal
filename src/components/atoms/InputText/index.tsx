@@ -13,7 +13,7 @@ const index = (props: Props) => {
 
   return (
     <InputWrapper>
-      <InputStyled type="text" value={value} hasValue={hasValue} onChange={handleChange} {...props} />
+      <InputStyled value={value} hasValue={hasValue} onChange={handleChange} {...props} />
       <LabelStyled htmlFor={props.id} hasValue={hasValue}>
         {props.label}
       </LabelStyled>
