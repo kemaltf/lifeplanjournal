@@ -1,11 +1,5 @@
 import Image from "next/image";
-import {
-  Hamburger,
-  LogoContainer,
-  Nav,
-  NavLinkContainer,
-  SiteTitle,
-} from "./NavStyled";
+import { Hamburger, LogoContainer, Nav, NavLinkContainer, SiteTitle } from "./NavStyled";
 import LogoImage from "../../../../public/images/logo_lifeplanjournal.png";
 import NavLink from "./NavLink";
 import { useRouter } from "next/router";
@@ -24,33 +18,18 @@ const Index = () => {
           <h1>Tes</h1>
         </SiteTitle>
       </LogoContainer>
-      <Hamburger
-        className={isOpen ? "open" : ""}
-        onClick={() => setIsOpen(!isOpen)}
-      >
+      <Hamburger className={isOpen ? "open" : ""} onClick={() => setIsOpen(!isOpen)}>
         <span></span>
         <span></span>
         <span></span>
         <span></span>
       </Hamburger>
-      <NavLinkContainer
-        className={isOpen ? "" : "close"}
-        onClick={() => setIsOpen(!isOpen)}
-      >
+      <NavLinkContainer className={isOpen ? "" : "close"} onClick={() => setIsOpen(!isOpen)}>
         <NavLink href="/" active={currentRoute === "/" ? "active" : ""}>
           Home
         </NavLink>
-        <NavLink
-          href="/products"
-          active={currentRoute === "/products" ? "active" : ""}
-        >
+        <NavLink href="/products" active={currentRoute === "/products" ? "active" : ""}>
           Products
-        </NavLink>
-        <NavLink
-          href="/artists"
-          active={currentRoute === "/products" ? "active" : ""}
-        >
-          Artists
         </NavLink>
       </NavLinkContainer>
     </Nav>

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { HiUser } from "react-icons/hi2";
-import { Container, Profile } from "./UserStyled";
+import { Container, Profile, UserContainer } from "./UserStyled";
 import MenuToggle from "@/components/organism/MenuToggle";
 type Props = {};
 
@@ -8,8 +8,10 @@ const index = ({ children }: Props) => {
   return (
     <Container>
       <Profile>
-        <HiUser></HiUser>
-        <span>User</span>
+        <UserContainer>
+          <HiUser></HiUser>
+          <span>User</span>
+        </UserContainer>
         <div>
           <MenuToggle></MenuToggle>
           {children}

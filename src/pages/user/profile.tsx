@@ -1,12 +1,13 @@
 import React from "react";
-import User from "@/components/organism/User";
+import UserNav from "@/components/organism/UserNav";
+import UserProfile from "@/components/organism/UserProfile";
 type Props = {};
 
 const Profile = (props: Props) => {
   return (
-    <User>
-      <div>Profile</div>
-    </User>
+    <UserNav>
+      <UserProfile></UserProfile>
+    </UserNav>
   );
 };
 

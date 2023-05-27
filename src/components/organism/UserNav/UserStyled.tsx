@@ -10,3 +10,10 @@ export const Profile = styled.div`
   background-color: white;
   padding: 40px 30px;
 `;
+
+export const UserContainer = styled.div`
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  padding: 0px 0px 30px 0px;
+`;

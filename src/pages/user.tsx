@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import UserComponent from "@/components/organism/User";
+import UserComponent from "@/components/organism/UserNav";
 import { useRouter } from "next/router";
 
 type Props = {};

@@ -1,12 +1,13 @@
 import React from "react";
-import User from "@/components/organism/User";
+import UserNav from "@/components/organism/UserNav";
+import OrderListComponent from "@/components/organism/OrderListComponent";
 type Props = {};
 
 const OrderList = (props: Props) => {
   return (
-    <User>
-      <div>OrderList</div>
-    </User>
+    <UserNav>
+      <OrderListComponent></OrderListComponent>
+    </UserNav>
   );
 };
 
