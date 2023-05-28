@@ -10,8 +10,8 @@ export const Container = styled.div`
 `;
 export const LoginContainer = styled.div`
   width: 368px;
-  border: 1px solid #d6dfeb;
-  box-shadow: 0 1px 4px rgba(141, 150, 170, 0.4);
+  border: ${(props) => (props.border ? props.border : "1px solid #d6dfeb")};
+  box-shadow: ${(props) => (props.boxShadow ? props.boxShadow : " 0 1px 4px rgba(141, 150, 170, 0.4)")};
   padding: 32px;
   border-radius: 8px;
   margin-top: -50px;
@@ -50,7 +50,7 @@ export const ForgotPassLink = styled(Link)`
   margin-top: 5px;
   font-size: 11px;
 `;
-export const SignUpLink = styled(Link)`
+export const SignUpLink = styled.a`
   margin-top: 5px;
   font-size: 14px;
 `;
