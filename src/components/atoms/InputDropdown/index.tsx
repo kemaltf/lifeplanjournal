@@ -1,11 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {
-  DropdownContainer,
-  DropdownToggle,
-  DropdownMenu,
-  DropdownOption,
-  LabelInput,
-} from "./InputDropdownStyled";
+import { DropdownContainer, DropdownToggle, DropdownMenu, DropdownOption, LabelInput } from "./InputDropdownStyled";
 type Props = {
   label: string;
   options: string[];
@@ -45,20 +39,14 @@ const index = ({ label, options, value, margin, onChange }: Props) => {
         <label>{label}</label>
       </LabelInput>
       <DropdownContainer>
-        <DropdownToggle
-          className={isOpen ? "open" : ""}
-          onClick={() => setIsOpen(!isOpen)}
-        >
+        <DropdownToggle className={isOpen ? "open" : ""} onClick={() => setIsOpen(!isOpen)}>
           {" "}
           {value}
         </DropdownToggle>
 
         <DropdownMenu className={isOpen ? "open" : "hidden"}>
           {options.map((option) => (
-            <DropdownOption
-              key={option}
-              onClick={() => handleOptionClick(option)}
-            >
+            <DropdownOption key={option} onClick={() => handleOptionClick(option)}>
               {option}
             </DropdownOption>
           ))}
