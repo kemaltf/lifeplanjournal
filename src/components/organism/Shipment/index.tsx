@@ -7,7 +7,7 @@ import Select from "@/components/atoms/SelectDropdown";
 import { IoClose } from "react-icons/io5";
 import Checkbox from "@/components/atoms/InputCheckbox";
 import ButtonDropdown from "@/components/atoms/ButtonDropdown";
-import { ButtonNoBox, ButtonNormal } from "@/components/atoms/Button/ButtonStyled";
+import { ButtonNoBox, ButtonStandard } from "@/components/atoms/Button/ButtonStyled";
 import DetailCheckout from "@/components/molecules/DetailCheckout";
 type Props = {};
 import Image from "next/image";
@@ -170,7 +170,7 @@ const index = (props: Props) => {
             <InputText id="address" label="Detail Address"></InputText>
             <InputParagraph maxChar="100" placeholder="note to courier"></InputParagraph>
             <Checkbox id={"option1"} name={"option1"} label="Save this information for next time" checked={checkedItems.option1} onChange={handleChangeCheckbox}></Checkbox>
-            <ButtonNormal onClick={handleSectionPlus}>Continue to shipping</ButtonNormal>
+            <ButtonStandard onClick={handleSectionPlus}>Continue to shipping</ButtonStandard>
           </Section1>
         )}
         {section === 2 && (
@@ -181,8 +181,8 @@ const index = (props: Props) => {
               <p>+6289692785818</p>
               <small>jalan cicukang no 190 RT 03 RW 09 kecamatan Arcamanik bandung no 190 Cisaranten bina harapan Arcamanik, Kota Bandung, 40294</small>
               <div style={{ marginTop: "15px", display: "flex", flex: "1", gap: "10px" }}>
-                <ButtonNormal onClick={handleClick}>Change Address</ButtonNormal>
-                <ButtonNormal onClick={handleClick}>Add New Address</ButtonNormal>
+                <ButtonStandard onClick={handleClick}>Change Address</ButtonStandard>
+                <ButtonStandard onClick={handleClick}>Add New Address</ButtonStandard>
               </div>
               {isMenuOpen ? (
                 <>
@@ -279,7 +279,7 @@ const index = (props: Props) => {
                       </GroupInput>
                       <InputText id="address" label="Detail Address"></InputText>
                       <Checkbox id={"option1"} name={"option1"} label="Save this information for next time" checked={checkedItems.option1} onChange={handleChangeCheckbox}></Checkbox>
-                      <ButtonNormal onClick={handleSectionPlus}>Add New Address</ButtonNormal>
+                      <ButtonStandard onClick={handleSectionPlus}>Add New Address</ButtonStandard>
                     </Section2>
                   </PopUpMenu>
                 </>

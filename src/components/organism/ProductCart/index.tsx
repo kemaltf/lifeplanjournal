@@ -21,7 +21,7 @@ import {
   Promo,
   YouMayAlsoLike,
 } from "./ProductCartStyled";
-import { ButtonNoBox, ButtonNormal } from "@/components/atoms/Button/ButtonStyled";
+import { ButtonStandard } from "@/components/atoms/Button/ButtonStyled";
 
 import Image from "next/image";
 import InputNumber from "@/components/atoms/InputNumber";
@@ -140,9 +140,9 @@ const index = (props: Props) => {
           </Recommendation>
           <TotalContainer>
             <Promo>
-              <ButtonNormal backgroundColor="white" color="var(--gog-primary)" borderColor="var(--gog-gray)">
+              <ButtonStandard backgroundColor="white" color="var(--gog-primary)" borderColor="var(--gog-gray)">
                 <RiCoupon3Fill style={{ marginRight: "5px" }}></RiCoupon3Fill>Makin Hemat Pakai Promo
-              </ButtonNormal>
+              </ButtonStandard>
             </Promo>
             <h4 style={{ marginBottom: "10px" }}>Ringkasan Belanja</h4>
             <Total>
@@ -153,7 +153,7 @@ const index = (props: Props) => {
               <span>Total diskon</span>
               <span>-Rp 50.000</span>
             </TotalDisc>
-            <ButtonNormal>Checkout</ButtonNormal>
+            <ButtonStandard>Checkout</ButtonStandard>
           </TotalContainer>
         </CheckoutContainer>
       </div>

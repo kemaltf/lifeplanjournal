@@ -1,19 +1,10 @@
 import { Container, ContainerCol } from "@/styles/SharedStyles";
 import React from "react";
-import {
-  FooterContainer,
-  FooterContent,
-  FooterInnerContainer,
-  SocialMediaIcon,
-  InputStyled,
-  ContainerColStyled,
-  Icon,
-  FooterMark,
-} from "./FooterStyled";
+import { FooterContainer, FooterContent, FooterInnerContainer, SocialMediaIcon, InputStyled, ContainerColStyled, Icon, FooterMark } from "./FooterStyled";
 import Link from "next/link";
 import { FaInstagram, FaTiktok, FaYoutube } from "react-icons/fa";
 import { SiShopee } from "react-icons/si";
-import { ButtonInputNoSpace } from "@/components/atoms/Button/ButtonStyled";
+import { ButtonStandard } from "@/components/atoms/Button/ButtonStyled";
 
 type Props = {};
 
@@ -66,20 +57,10 @@ const index = (props: Props) => {
                 <strong>Payment</strong>
               </li>
               <li>
-                <Icon
-                  src="/images/icons/qris.svg"
-                  alt="QRIS"
-                  width={80}
-                  height={20}
-                />
+                <Icon src="/images/icons/qris.svg" alt="QRIS" width={80} height={20} />
               </li>
               <li>
-                <Icon
-                  src="/images/icons/bca.svg"
-                  alt="QRIS"
-                  width={80}
-                  height={20}
-                />
+                <Icon src="/images/icons/bca.svg" alt="QRIS" width={80} height={20} />
               </li>
             </ul>
           </FooterContent>
@@ -97,7 +78,7 @@ const index = (props: Props) => {
               </div>
               <form>
                 <InputStyled type="text"></InputStyled>
-                <ButtonInputNoSpace type="submit">Submit</ButtonInputNoSpace>
+                <ButtonStandard type="submit">Submit</ButtonStandard>
               </form>
               <div>
                 <p>
