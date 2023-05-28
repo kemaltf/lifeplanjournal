@@ -1,5 +1,9 @@
 import Link from "next/link";
 import styled from "styled-components";
+interface LoginContainerProps {
+  border: string;
+  boxShadow: string;
+}
 export const Container = styled.div`
   display: flex;
   width: 100%;
@@ -8,7 +12,7 @@ export const Container = styled.div`
   align-items: center;
   text-align: center;
 `;
-export const LoginContainer = styled.div`
+export const LoginContainer = styled.div<LoginContainerProps>`
   width: 368px;
   border: ${(props) => (props.border ? props.border : "1px solid #d6dfeb")};
   box-shadow: ${(props) => (props.boxShadow ? props.boxShadow : " 0 1px 4px rgba(141, 150, 170, 0.4)")};

@@ -1,5 +1,8 @@
 import styled from "styled-components";
 import Link from "next/link";
+interface DropdownMenu {
+  isOpen: boolean;
+}
 export const Nav = styled.nav`
   display: flex;
   position: fixed;
@@ -199,7 +202,7 @@ export const LinkMenu = styled.div`
   font-size: 0.9rem;
   color: #003f59;
 `;
-export const DropdownMenu = styled.ul`
+export const DropdownMenu = styled.ul<DropdownMenu>`
   display: ${(props) => (props.isOpen ? "block" : "none")};
   position: absolute;
   top: 100%;

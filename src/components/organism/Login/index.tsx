@@ -5,7 +5,10 @@ import { Container, LoginContainer, LoginTitle, ForgotPass, LoginWithGoogleText,
 import { FcGoogle } from "react-icons/fc";
 import React, { useState, useEffect, useRef } from "react";
 
-type Props = {};
+interface Props {
+  border: string;
+  boxShadow: string;
+}
 
 const index = ({ border, boxShadow }: Props) => {
   const [section, setSection] = useState(1);

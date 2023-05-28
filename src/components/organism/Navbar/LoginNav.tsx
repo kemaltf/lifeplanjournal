@@ -1,16 +1,14 @@
 import Image from "next/image";
-import React, { useState, useRef, useContext } from "react";
+import React, { useState, useRef } from "react";
 import { LoginNav, ImageDiv, HiName, LinkMenu, DropdownMenu, DropdownItem, LinkDropDown } from "./NavStyled";
-import { RiContactsBookLine } from "react-icons/ri";
 import Link from "next/link";
-import { ButtonStandard } from "@/components/atoms/Button/ButtonStyled";
 import LoginPopup from "./LoginPopup";
 import { useOverlayStatus } from "@/context/OverlayStatusContext";
 type Props = {};
 
 const LoginNavComponent = (props: Props) => {
   const { overlayStatus, setOverlayStatus } = useOverlayStatus();
-  const dropdownRef = useRef();
+  const dropdownRef = useRef(null);
   const [isOpen, setIsOpen] = useState(false);
   const [isPopup, setIsPopup] = useState(false);
   const [login, setLogin] = useState(true);

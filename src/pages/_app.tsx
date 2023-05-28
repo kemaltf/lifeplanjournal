@@ -5,6 +5,8 @@ import Navbar from "../components/organism/Navbar";
 import Footer from "../components/organism/Footer";
 import styled from "styled-components";
 import OverlayStatusProvider from "../context/OverlayStatusContext";
+import UserPositionProvider from "../context/UserPositionContext";
+
 const theme: DefaultTheme = {
   colors: {
     primary: "#111",
@@ -15,16 +17,18 @@ const theme: DefaultTheme = {
 export default function App({ Component, pageProps }: AppProps) {
   return (
     <>
-      <OverlayStatusProvider>
-        <ThemeProvider theme={theme}>
-          <Navbar></Navbar>
-          <GlobalStyle />
-          <Container>
-            <Component {...pageProps} />
-          </Container>
-          <Footer></Footer>
-        </ThemeProvider>
-      </OverlayStatusProvider>
+      <UserPositionProvider>
+        <OverlayStatusProvider>
+          <ThemeProvider theme={theme}>
+            <Navbar></Navbar>
+            <GlobalStyle />
+            <Container>
+              <Component {...pageProps} />
+            </Container>
+            <Footer></Footer>
+          </ThemeProvider>
+        </OverlayStatusProvider>
+      </UserPositionProvider>
     </>
   );
 }

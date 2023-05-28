@@ -11,11 +11,10 @@ const Index = () => {
   const [isOpen, setIsOpen] = useState(false);
   const router = useRouter();
   const currentRoute = router.pathname;
-  const { overlayStatus, setOverlayStatus } = useOverlayStatus();
+  const { overlayStatus } = useOverlayStatus();
 
   return (
     <>
-      {/* add context */}
       {overlayStatus && <Overlay />}
       <Nav>
         <SiteLogo alt="Life Plan Journal" image={SiteImage} href="/" titleImage="Tes"></SiteLogo>

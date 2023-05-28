@@ -2,7 +2,9 @@ import React, { useEffect } from "react";
 import LoginComponent from "@/components/organism/Login";
 import { IoClose } from "react-icons/io5";
 import { Overlay, PopUpMenu, Section2, CloseButton } from "./NavStyled";
-type Props = {};
+interface Props {
+  setIsPopup: (value: boolean) => void;
+}
 
 const LoginPopup = ({ setIsPopup }: Props) => {
   const close = () => {
@@ -10,7 +12,7 @@ const LoginPopup = ({ setIsPopup }: Props) => {
   };
 
   useEffect(() => {
-    const handleEsc = (e) => {
+    const handleEsc = (e: KeyboardEvent) => {
       if (e.keyCode === 27) {
         close();
       }
