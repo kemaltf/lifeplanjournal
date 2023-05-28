@@ -4,8 +4,7 @@ import GlobalStyle from "../styles/globalstyles";
 import Navbar from "../components/organism/Navbar";
 import Footer from "../components/organism/Footer";
 import styled from "styled-components";
-import OverlayStatusContext from "@/context/OverlayStatusContext";
-import { useState } from "react";
+import OverlayStatusProvider from "../context/OverlayStatusContext";
 const theme: DefaultTheme = {
   colors: {
     primary: "#111",
@@ -14,10 +13,9 @@ const theme: DefaultTheme = {
 };
 
 export default function App({ Component, pageProps }: AppProps) {
-  const [overlayStatus, setOverlayStatus] = useState(false);
   return (
     <>
-      <OverlayStatusContext.Provider value={{ overlayStatus, setOverlayStatus }}>
+      <OverlayStatusProvider>
         <ThemeProvider theme={theme}>
           <Navbar></Navbar>
           <GlobalStyle />
@@ -26,7 +24,7 @@ export default function App({ Component, pageProps }: AppProps) {
           </Container>
           <Footer></Footer>
         </ThemeProvider>
-      </OverlayStatusContext.Provider>
+      </OverlayStatusProvider>
     </>
   );
 }

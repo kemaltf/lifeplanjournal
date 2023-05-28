@@ -5,18 +5,18 @@ import SiteLogo from "./SiteLogo";
 import SiteImage from "../../../../public/images/logo_lifeplanjournal.png";
 import HamburgerComponent from "./Hamburger";
 import LoginNavComponent from "./LoginNav";
-import OverlayStatusContext from "@/context/OverlayStatusContext";
+import { useOverlayStatus } from "@/context/OverlayStatusContext";
 
 const Index = () => {
   const [isOpen, setIsOpen] = useState(false);
   const router = useRouter();
   const currentRoute = router.pathname;
-  const overlayStatus = useContext(OverlayStatusContext);
-  console.log(overlayStatus);
+  const { overlayStatus, setOverlayStatus } = useOverlayStatus();
+
   return (
     <>
       {/* add context */}
-      {overlayStatus.overlayStatus && <Overlay />}
+      {overlayStatus && <Overlay />}
       <Nav>
         <SiteLogo alt="Life Plan Journal" image={SiteImage} href="/" titleImage="Tes"></SiteLogo>
         <HamburgerComponent className={isOpen ? "open" : ""} onClick={() => setIsOpen(!isOpen)}></HamburgerComponent>

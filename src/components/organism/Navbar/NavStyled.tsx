@@ -1,15 +1,14 @@
 import styled from "styled-components";
 import Link from "next/link";
 export const Nav = styled.nav`
+  display: flex;
+  position: fixed;
+  align-items: center;
+  justify-content: space-between;
   height: 50px;
   width: 100%;
-  position: fixed;
-  display: flex;
   z-index: 999;
-  justify-content: space-between;
-  align-items: center;
   background-color: white;
-  /* box-shadow: 0px 0px 0px 1px #eaeaea; */
   border-style: solid;
   border-width: 0 0 1px 0;
   border-bottom-color: #eaeaea;
@@ -22,6 +21,7 @@ export const Nav = styled.nav`
 
   @media (max-width: 767px) {
     padding: 0;
+    position: relative;
   }
 `;
 
@@ -33,8 +33,12 @@ export const LogoContainer = styled(Link)`
 
 export const NavLinkContainer = styled.div`
   margin-right: 1rem;
-
-  @media (max-width: 768px) {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  @media (max-width: 767px) {
+    position: absolute;
+    top: 50px;
     display: flex;
     overflow: hidden;
     flex-direction: column;
@@ -152,3 +156,160 @@ export const Hamburger = styled.div`
     display: flex;
   }
 `;
+
+export const LoginNav = styled.button`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  border: none;
+  background: none;
+  position: relative;
+  padding-bottom: 10px;
+  margin-top: 10px;
+  padding-right: 20px;
+
+  &:after {
+    content: "";
+    position: absolute;
+    top: 20%;
+    right: 0;
+    transform: translateY(-50%);
+    border: solid var(--gog-primary);
+    border-width: 0 2px 2px 0;
+    display: inline-block;
+    padding: 3px;
+    transform: rotate(45deg);
+    transition: transform 0.2s ease-in-out;
+  }
+
+  &.open:after {
+    transform: translateY(30%) rotate(225deg);
+  }
+`;
+export const ImageDiv = styled.div`
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  position: relative;
+  overflow: hidden;
+`;
+export const HiName = styled.div``;
+export const LinkMenu = styled.div`
+  font-size: 0.9rem;
+  color: #003f59;
+`;
+export const DropdownMenu = styled.ul`
+  display: ${(props) => (props.isOpen ? "block" : "none")};
+  position: absolute;
+  top: 100%;
+  left: -100px;
+  right: 0;
+  padding: 0;
+  margin: 0 0 0 0;
+  /* width: 50px; */
+  background-color: white;
+  border-radius: 0px 0px 10px 10px;
+  box-shadow: rgba(0, 0, 0, 0.12) 0px 2px 8px 0px;
+  list-style-type: none;
+  text-align: start;
+  font-size: 0.9rem;
+  overflow: hidden;
+`;
+
+export const DropdownItem = styled.li`
+  padding: 10px;
+
+  &:hover {
+    background-color: var(--gog-pastel-teal);
+  }
+`;
+export const Overlay = styled.div`
+  width: 100%;
+  height: 100%;
+  background-color: #2e3137;
+  opacity: 0.7;
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  overflow: hidden;
+  z-index: 100;
+  will-change: opacity;
+  transition: opacity 300ms cubic-bezier(0, 0, 0.3, 1) 0s;
+`;
+export const LinkDropDown = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  border: none;
+  background: none;
+  position: relative;
+  padding: 0 0.9rem;
+  padding-bottom: 14px;
+  margin-top: 14px;
+  padding-right: 20px;
+  &:after {
+    content: "";
+    position: absolute;
+    top: 10%;
+    right: 0;
+    transform: translateY(-50%);
+    border: solid var(--gog-primary);
+    border-width: 0 2px 2px 0;
+    display: inline-block;
+    padding: 3px;
+    transform: rotate(45deg);
+    transition: transform 0.2s ease-in-out;
+  }
+
+  &.open:after {
+    transform: translateY(30%) rotate(225deg);
+  }
+
+  &:hover {
+    cursor: pointer;
+  }
+`;
+export const PopUpMenu = styled.div`
+  z-index: 9999;
+  position: fixed;
+  /* width: 100%; */
+  height: 100%;
+  left: 50%;
+  right: 50%;
+  top: 0;
+  /* bottom: 50%; */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  /* background-color: white; */
+`;
+export const CloseButton = styled.div`
+  position: absolute;
+  right: 30px;
+  cursor: pointer;
+  top: 25px;
+  display: flex;
+  align-items: center;
+  border-radius: 5px;
+  &:hover {
+    background-color: #f1f3f7;
+  }
+`;
+export const Section2 = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  max-height: 75%;
+  position: relative;
+  background-color: white;
+  box-shadow: 0 1px 4px rgba(141, 150, 170, 0.4);
+  border: 1px solid #d6dfeb;
+  border-radius: 5px;
+  padding-top: 90px;
+  padding-right: 20px;
+  padding-left: 20px;
+`;
+export const OuterPopUp = styled.div``;

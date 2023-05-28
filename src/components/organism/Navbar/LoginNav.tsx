@@ -5,11 +5,11 @@ import { RiContactsBookLine } from "react-icons/ri";
 import Link from "next/link";
 import { ButtonStandard } from "@/components/atoms/Button/ButtonStyled";
 import LoginPopup from "./LoginPopup";
-import OverlayStatusContext from "@/context/OverlayStatusContext";
+import { useOverlayStatus } from "@/context/OverlayStatusContext";
 type Props = {};
 
 const LoginNavComponent = (props: Props) => {
-  const { overlayStatus, setOverlayStatus } = useContext(OverlayStatusContext);
+  const { overlayStatus, setOverlayStatus } = useOverlayStatus();
   const dropdownRef = useRef();
   const [isOpen, setIsOpen] = useState(false);
   const [isPopup, setIsPopup] = useState(false);
