@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { DetailCheckoutContainer, SummaryContainer, TotalPrice, TotalFinalPriceContainer, TotalFinalPrice, Promo } from "./DetailCheckoutStyled";
-import { ButtonNormal } from "@/components/atoms/Button/ButtonStyled";
+import { ButtonStandard } from "@/components/atoms/Button/ButtonStyled";
 type Props = {};
 import { RiCoupon3Fill } from "react-icons/ri";
 
@@ -61,9 +61,9 @@ const index = ({ fixedPos, containerHeight, screenWidth, section }: Props) => {
   return (
     <DetailCheckoutContainer fixedPos={fixedPos} className={isFixed === true ? "fixed" : isOnTheBottom ? "normaldown" : "normal"} containerHeight={containerHeight} containerHeightInner={containerHeightInner} ref={containerRefInner}>
       <Promo>
-        <ButtonNormal backgroundColor="white" color="var(--gog-primary)" borderColor="var(--gog-gray)">
+        <ButtonStandard backgroundColor="white" color="var(--gog-primary)" borderColor="var(--gog-gray)">
           <RiCoupon3Fill style={{ marginRight: "5px" }}></RiCoupon3Fill>Makin Hemat Pakai Promo
-        </ButtonNormal>
+        </ButtonStandard>
       </Promo>
       <h3>Shopping Summary</h3>
       <SummaryContainer>
@@ -86,7 +86,7 @@ const index = ({ fixedPos, containerHeight, screenWidth, section }: Props) => {
           <p>1.595.000</p>
         </TotalFinalPrice>
       </TotalFinalPriceContainer>
-      <ButtonNormal>Checkout</ButtonNormal>
+      <ButtonStandard>Checkout</ButtonStandard>
     </DetailCheckoutContainer>
   );
 };

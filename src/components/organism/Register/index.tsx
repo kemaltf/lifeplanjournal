@@ -1,6 +1,6 @@
 import { ContainerPad } from "@/styles/SharedStyles";
 import InputText from "@/components/atoms/InputText";
-import { ButtonNormal } from "@/components/atoms/Button/ButtonStyled";
+import { ButtonStandard } from "@/components/atoms/Button/ButtonStyled";
 import { Container, LoginContainer, LoginTitle, ForgotPass, LoginWithGoogleText, BorderSpan, TextSpan, ForgotPassLink, SignInSection, SignIn, ImageContainer, LoginSection } from "./RegisterStyled";
 import { FcGoogle } from "react-icons/fc";
 import React, { useState, useEffect, useRef } from "react";
@@ -23,9 +23,9 @@ const index = (props: Props) => {
               <SignIn href={"/login"}>Sign In</SignIn>
             </SignInSection>
           </LoginTitle>
-          <ButtonNormal style={{ marginBottom: "10px" }}>
+          <ButtonStandard style={{ marginBottom: "10px" }}>
             <FcGoogle style={{ marginRight: "10px" }}></FcGoogle>Google
-          </ButtonNormal>
+          </ButtonStandard>
           <LoginWithGoogleText>
             <BorderSpan></BorderSpan>
             <TextSpan>or register with</TextSpan>
@@ -34,7 +34,7 @@ const index = (props: Props) => {
 
           <InputText id="email" label="Email Address*"></InputText>
 
-          <ButtonNormal style={{ margin: "15px 0" }}>Next</ButtonNormal>
+          <ButtonStandard style={{ margin: "15px 0" }}>Next</ButtonStandard>
         </LoginContainer>
       </LoginSection>
     </Container>

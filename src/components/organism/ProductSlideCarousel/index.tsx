@@ -30,7 +30,7 @@ import InputNumber from "../../atoms/InputNumber";
 import InputParagraph from "../../atoms/InputParagraph";
 import { BsEnvelopePaper, BsEnvelope } from "react-icons/bs";
 
-import { ButtonNoBox, ButtonNormal } from "@/components/atoms/Button/ButtonStyled";
+import { ButtonNoBox, ButtonStandard } from "@/components/atoms/Button/ButtonStyled";
 // Ceritanya gambarnya dari API, setelah API jadi kita replace
 const images: string[] = [
   "https://via.placeholder.com/210/00FF00?text=1",
@@ -119,7 +119,7 @@ const index = (props: Props) => {
                 <span>Stock:</span> 1000
               </Stock>
             </QuantityOrder>
-            <ButtonNormal>Checkout</ButtonNormal>
+            <ButtonStandard>Checkout</ButtonStandard>
           </OrderSection>
         </ContainerDesc>
       </ContainerPadStyled>

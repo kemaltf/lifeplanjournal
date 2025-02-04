@@ -2,9 +2,12 @@ import React, { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/router";
 import { NavLinkContainer, NavLinkButtonContainer, BorderBottom } from "./MenuToggleStyled";
 import LinkButton from "@/components/atoms/LinkButton";
+import { useUserPosition } from "@/context/UserPositionContext";
+
 type Props = {};
 const hrefs = { "Personal Profile": "/user/profile", "Order History": "/user/orderlist", "Address List": "/user/addresslist" };
 const index = (props: Props) => {
+  const { userPosition, setUserPosition } = useUserPosition();
   // router check
   const router = useRouter();
   const currentRoute = router.pathname;
@@ -13,7 +16,7 @@ const index = (props: Props) => {
   const containerRefs = useRef([]); // container collection
   const [containerWidth, setContainerWidth] = useState([]); // container width collection
   const [activeLink, setActiveLink] = useState(0); // current active link
-  const [leftPosition, setLeftPosition] = useState(null); // left position
+  const [leftPosition, setLeftPosition] = useState(userPosition); // left position
 
   // function for colecting the ref html elements
   const addComponentRef = (ref) => {
@@ -42,8 +45,9 @@ const index = (props: Props) => {
         sum += containerWidth[i];
       }
     }
-    return sum;
-    // setLeftPosition(sum);
+    setUserPosition(sum);
+    setLeftPosition(sum);
+    // return sum;
   };
 
   /**
@@ -53,9 +57,9 @@ const index = (props: Props) => {
     const profileIndex = Object.keys(hrefs).findIndex((key) => hrefs[key] === currentRoute);
     setActiveLink(profileIndex);
     getContainerWidth();
-    // getPosition();
+    getPosition();
     const handleResize = (): void => {
-      // getPosition();
+      getPosition();
       getContainerWidth();
     };
     window.addEventListener("resize", handleResize); // call handleResize when window has changed
@@ -63,11 +67,7 @@ const index = (props: Props) => {
       window.removeEventListener("resize", handleResize); // remove event listener when the component has unmounted
     };
   }, [activeLink]);
-  useEffect(() => {
-    if (containerWidth.length > 0) {
-      setLeftPosition(getPosition());
-    }
-  }, [containerWidth]);
+
   return (
     <div>
       <NavLinkContainer>

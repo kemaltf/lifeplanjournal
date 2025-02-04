@@ -1,5 +1,9 @@
 import Link from "next/link";
 import styled from "styled-components";
+interface LoginContainerProps {
+  border: string;
+  boxShadow: string;
+}
 export const Container = styled.div`
   display: flex;
   width: 100%;
@@ -8,10 +12,10 @@ export const Container = styled.div`
   align-items: center;
   text-align: center;
 `;
-export const LoginContainer = styled.div`
+export const LoginContainer = styled.div<LoginContainerProps>`
   width: 368px;
-  border: 1px solid #d6dfeb;
-  box-shadow: 0 1px 4px rgba(141, 150, 170, 0.4);
+  border: ${(props) => (props.border ? props.border : "1px solid #d6dfeb")};
+  box-shadow: ${(props) => (props.boxShadow ? props.boxShadow : " 0 1px 4px rgba(141, 150, 170, 0.4)")};
   padding: 32px;
   border-radius: 8px;
   margin-top: -50px;
@@ -50,7 +54,7 @@ export const ForgotPassLink = styled(Link)`
   margin-top: 5px;
   font-size: 11px;
 `;
-export const SignUpLink = styled(Link)`
+export const SignUpLink = styled.a`
   margin-top: 5px;
   font-size: 14px;
 `;

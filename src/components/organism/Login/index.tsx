@@ -1,13 +1,16 @@
 import { ContainerPad } from "@/styles/SharedStyles";
 import InputText from "@/components/atoms/InputText";
-import { ButtonNormal } from "@/components/atoms/Button/ButtonStyled";
+import { ButtonStandard } from "@/components/atoms/Button/ButtonStyled";
 import { Container, LoginContainer, LoginTitle, ForgotPass, LoginWithGoogleText, BorderSpan, TextSpan, ForgotPassLink, SignUpLink } from "./LoginStyled";
 import { FcGoogle } from "react-icons/fc";
 import React, { useState, useEffect, useRef } from "react";
 
-type Props = {};
+interface Props {
+  border: string;
+  boxShadow: string;
+}
 
-const index = (props: Props) => {
+const index = ({ border, boxShadow }: Props) => {
   const [section, setSection] = useState(1);
   const handleSectionPlus = () => {
     const sectionPlusOne = section + 1;
@@ -17,10 +20,9 @@ const index = (props: Props) => {
     const sectionMinusOne = section - 1;
     setSection(sectionMinusOne);
   };
-  console.log(section);
   return (
     <Container>
-      <LoginContainer>
+      <LoginContainer border={border} boxShadow={boxShadow}>
         <LoginTitle style={{ marginBottom: "50px" }}>
           <h1>Login</h1>
           <SignUpLink href={"/register"}>Sign Up</SignUpLink>
@@ -31,9 +33,9 @@ const index = (props: Props) => {
             <ForgotPass>
               <ForgotPassLink href={"/"}>Forgot Password?</ForgotPassLink>
             </ForgotPass>
-            <ButtonNormal style={{ margin: "10px 0" }} onClick={handleSectionPlus}>
+            <ButtonStandard style={{ margin: "10px 0" }} onClick={handleSectionPlus}>
               Next
-            </ButtonNormal>
+            </ButtonStandard>
           </>
         )}
         {section === 2 && (
@@ -42,9 +44,9 @@ const index = (props: Props) => {
             <ForgotPass>
               <ForgotPassLink href={"/"}>Forgot Password?</ForgotPassLink>
             </ForgotPass>
-            <ButtonNormal style={{ margin: "10px 0" }} onClick={handleSectionPlus}>
+            <ButtonStandard style={{ margin: "10px 0" }} onClick={handleSectionPlus}>
               Login
-            </ButtonNormal>
+            </ButtonStandard>
           </>
         )}
         <LoginWithGoogleText>
@@ -52,9 +54,9 @@ const index = (props: Props) => {
           <TextSpan>or login with</TextSpan>
           <BorderSpan></BorderSpan>
         </LoginWithGoogleText>
-        <ButtonNormal>
+        <ButtonStandard>
           <FcGoogle style={{ marginRight: "10px" }}></FcGoogle>Google
-        </ButtonNormal>
+        </ButtonStandard>
       </LoginContainer>
     </Container>
   );
